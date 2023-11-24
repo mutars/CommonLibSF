@@ -86,6 +86,21 @@ namespace RE
 			return func(this, a_x, a_y, a_z);
 		}
 
+		NiMatrix3 Transpose() const
+		{
+			NiMatrix3 result;
+			result.entry[0].pt[0] = entry[0].pt[0];
+			result.entry[0].pt[1] = entry[1].pt[0];
+			result.entry[0].pt[2] = entry[2].pt[0];
+			result.entry[1].pt[0] = entry[0].pt[1];
+			result.entry[1].pt[1] = entry[1].pt[1];
+			result.entry[1].pt[2] = entry[2].pt[1];
+			result.entry[2].pt[0] = entry[0].pt[2];
+			result.entry[2].pt[1] = entry[1].pt[2];
+			result.entry[2].pt[2] = entry[2].pt[2];
+			return result;
+		}
+
 		// members
 		NiPoint4 entry[3];  // 00
 	};
