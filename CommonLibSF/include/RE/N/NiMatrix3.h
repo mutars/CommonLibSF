@@ -79,6 +79,18 @@ namespace RE
 				entry[2].pt[0] * p.x + entry[2].pt[1] * p.y + entry[2].pt[2] * p.z);
 		}
 
+		RE::NiPoint4& operator[](size_t i)
+		{
+			assert(i < 3);
+			return entry[i];
+		}
+
+		const RE::NiPoint4& operator[](size_t i) const
+		{
+			assert(i < 3);
+			return entry[i];
+		}
+
 		bool ToEulerAnglesXYZ(float& a_x, float& a_y, float& a_z)
 		{
 			using func_t = decltype(&NiMatrix3::ToEulerAnglesXYZ);
