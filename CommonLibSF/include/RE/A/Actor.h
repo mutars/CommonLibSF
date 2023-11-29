@@ -168,8 +168,8 @@ namespace RE
 		virtual void         Unk_133();                                                                              // 133
 		virtual void         Unk_134();                                                                              // 134
 		virtual void         Unk_135();                                                                              // 135
-		virtual void         Unk_136();                                                                              // 136
-		virtual void         Unk_137();                                                                              // 137
+		virtual void         DrawWeaponMagicHands(bool a_draw);                                                      // 136
+		virtual void         SetPosition(const NiPoint3& a_pos, bool a_updateCharController);                        // 137
 		virtual void         Unk_138();                                                                              // 138
 		virtual void         Resurrect(bool a_resetInventory, bool a_attach3D);                                      // 139
 		virtual void         Unk_13A();                                                                              // 13A
