@@ -5,7 +5,7 @@
 [![C++23](https://img.shields.io/static/v1?label=standard&message=c%2B%2B23&color=blue&logo=c%2B%2B&&logoColor=red&style=flat)](https://en.cppreference.com/w/cpp/compiler_support)
 ![Platform](https://img.shields.io/static/v1?label=platform&message=windows&color=dimgray&style=flat&logo=windows)
 [![Game version](https://img.shields.io/badge/game%20version-1.8.86-orange)](#Developing-with-CommonLibSF)
-[![VCPKG_VER](https://img.shields.io/static/v1?label=vcpkg%20registry&message=2023-11-23.5&color=green&style=flat)](https://github.com/Starfield-Reverse-Engineering/Starfield-RE-vcpkg)
+[![VCPKG_VER](https://img.shields.io/static/v1?label=vcpkg%20registry&message=2024-01-31&color=green&style=flat)](https://github.com/Starfield-Reverse-Engineering/Starfield-RE-vcpkg)
 [![Main CI](https://img.shields.io/github/actions/workflow/status/Starfield-Reverse-Engineering/CommonLibSF/main_ci.yml)](https://github.com/Starfield-Reverse-Engineering/CommonLibSF/actions/workflows/main_ci.yml)
 
 ## Build Dependencies
@@ -91,6 +91,11 @@ The main requirement of this license is: if you link your mod against CommonLibS
     </a>
   </td>
   <td align="center">
+    <a href="https://github.com/shad0wshayd3" title="shad0wshayd3">
+      <img src="https://avatars.githubusercontent.com/u/2724172?v=4" width="50;" alt="shad0wshayd3"/>
+    </a>
+  </td>
+  <td align="center">
     <a href="https://github.com/alandtse" title="Alan Tse">
       <img src="https://avatars.githubusercontent.com/u/7086117?v=4" width="50;" alt="Alan Tse"/>
     </a>
@@ -98,6 +103,11 @@ The main requirement of this license is: if you link your mod against CommonLibS
   <td align="center">
     <a href="https://github.com/FlayaN" title="FlayaN">
       <img src="https://avatars.githubusercontent.com/u/964655?v=4" width="50;" alt="FlayaN"/>
+    </a>
+  </td>
+  <td align="center">
+    <a href="https://github.com/ianpatt" title="Ian Patterson">
+      <img src="https://avatars.githubusercontent.com/u/292795?v=4" width="50;" alt="Ian Patterson"/>
     </a>
   </td>
   <td align="center">
@@ -111,18 +121,8 @@ The main requirement of this license is: if you link your mod against CommonLibS
     </a>
   </td>
   <td align="center">
-    <a href="https://github.com/ianpatt" title="Ian Patterson">
-      <img src="https://avatars.githubusercontent.com/u/292795?v=4" width="50;" alt="Ian Patterson"/>
-    </a>
-  </td>
-  <td align="center">
     <a href="https://github.com/lStewieAl" title="lStewieAl">
       <img src="https://avatars.githubusercontent.com/u/16544747?v=4" width="50;" alt="lStewieAl"/>
-    </a>
-  </td>
-  <td align="center">
-    <a href="https://github.com/shad0wshayd3" title="shad0wshayd3">
-      <img src="https://avatars.githubusercontent.com/u/2724172?v=4" width="50;" alt="shad0wshayd3"/>
     </a>
   </td>
 </tr></table><!--CONTRIBUTORS_END-->
