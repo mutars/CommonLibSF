@@ -13,6 +13,7 @@ namespace RE
 			std::byte unk[0x80];
 			NiCamera* camera;
 		};
+		static_assert(offsetof(SceneGraphRoot, SceneGraphRoot::camera) == 0x80);
 
 		static SceneGraphRoot* WorldRoot()
 		{
