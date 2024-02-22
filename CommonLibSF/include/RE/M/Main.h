@@ -8,15 +8,21 @@ namespace RE
 	class Main
 	{
 	public:
-		static NiAVObject* WorldRoot()
+		struct SceneGraphRoot
 		{
-			static REL::Relocation<NiAVObject**> singleton{ REL::ID(887308) };
+			std::byte unk[0x80];
+			NiCamera* camera;
+		};
+
+		static SceneGraphRoot* WorldRoot()
+		{
+			static REL::Relocation<SceneGraphRoot**> singleton{ REL::ID(887308) };
 			return *singleton;
 		}
 
 		static NiCamera* WorldCamera()
 		{
-			return reinterpret_cast<NiCamera*>(reinterpret_cast<uintptr_t>(WorldRoot()) + 0x80);
+			return WorldRoot()->camera;
 		}
 	};
 }
