@@ -401,6 +401,7 @@
 #include "RE/T/TESWorldSpace.h"
 #include "RE/T/TypeInfo.h"
 #include "RE/U/UI.h"
+#include "RE/U/UIMessageQueue.h"
 #include "RE/V/Variable.h"
 #include "RE/W/WwiseGUID.h"
 #include "RE/W/WwiseSoundHook.h"

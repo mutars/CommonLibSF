@@ -29,7 +29,12 @@ namespace RE
 		virtual void HandleEvent(const MouseMoveEvent*) { return; }          // 06
 		virtual void HandleEvent(const CharacterEvent*) { return; }          // 07
 		virtual void HandleEvent(const ButtonEvent*) { return; }             // 08
-		virtual void Unk_09(const InputEvent*);                              // 09
+		virtual void InputEventUser_Unk_09(const InputEvent* a_event)        // 09
+		{
+			using func_t = decltype(&BSInputEventUser::InputEventUser_Unk_09);
+			REL::Relocation<func_t> func(REL::ID(178899));
+			return func(this, a_event); 
+		}  
 
 		SF_HEAP_REDEFINE_NEW(BSInputEventUser);
 
