@@ -36,9 +36,9 @@ namespace RE
 
 		struct Entry
 		{
-			BSFixedString unk00;
-			IMenu*        unk08;
-			uint64_t      unk10;
+			BSFixedString menuName;
+			IMenu*        menuPtr;
+			void** (*InitFunctor)(void**);
 			uint64_t      unk18;
 			uint64_t      unk20;
 			uint64_t      unk28;

@@ -10,7 +10,7 @@ namespace RE
 	class UIMessageQueue
 	{
 	public:
-		UIMessageQueue* GetSingleton()
+		static UIMessageQueue* GetSingleton()
 		{
 			REL::Relocation<UIMessageQueue**> singleton{ REL::ID(878637) };
 			return *singleton;

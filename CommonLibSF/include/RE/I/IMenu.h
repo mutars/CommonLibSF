@@ -44,23 +44,23 @@ namespace RE
 		// override
 		virtual bool ShouldHandleEvent(const InputEvent* a_event) override
 		{
-			using func_t = bool (*)(void*, const InputEvent*);
+			using func_t = bool (*)(BSInputEventUser*, const InputEvent*);
 			REL::Relocation<func_t> func(REL::ID(187262));
-			return func((void*)((uint64_t)this + 16), a_event);
+			return func(this, a_event);
 		}
 
 		virtual void HandleEvent(const ThumbstickEvent* a_event) override
 		{
-			using func_t = void (*)(void*, const ThumbstickEvent*);
+			using func_t = void (*)(BSInputEventUser*, const ThumbstickEvent*);
 			REL::Relocation<func_t> func(REL::ID(187235));
-			return func((void*)((uint64_t)this + 16), a_event);
+			return func(this, a_event);
 		}
 
 		virtual void HandleEvent(const ButtonEvent* a_event) override
 		{
-			using func_t = void (*)(void*, const ButtonEvent*);
+			using func_t = void (*)(BSInputEventUser*, const ButtonEvent*);
 			REL::Relocation<func_t> func(REL::ID(187234));
-			return func((void*)((uint64_t)this + 16), a_event);
+			return func(this, a_event);
 		}
 
 		// add
@@ -134,8 +134,9 @@ namespace RE
 
 		virtual BSFixedString* Unk13()											// 13
 		{
-			REL::Relocation<BSFixedString**> singleton(REL::ID(80451));
-			return *singleton;
+			using func_t = decltype(&IMenu::Unk13);
+			REL::Relocation<func_t> func(REL::ID(76183));
+			return func(this);
 		};
 
 		virtual bool Unk14()													// 14
@@ -161,11 +162,11 @@ namespace RE
 			return false;
 		};
 
-		virtual uint64_t Unk18(void* a, uint64_t b, float c)					// 18
+		virtual uint64_t Unk18(void* a, uint64_t b)								// 18
 		{
 			using func_t = decltype(&IMenu::Unk18);
 			REL::Relocation<func_t> func(REL::ID(1275268));
-			return func(this, a, b, c);
+			return func(this, a, b);
 		}
 
 		virtual uint64_t Unk19(void* a, int b, int c) {							// 19
@@ -180,21 +181,6 @@ namespace RE
 			REL::Relocation<func_t> func(REL::ID(187232));
 			return func(this); 
 		};
-
-		//_InterlockedExchangeAdd(this + 8, 1);
-		void AddRef()
-		{
-			using func_t = decltype(&IMenu::AddRef);
-			REL::Relocation<func_t> func(REL::ID(50544));
-			return func(this);
-		}
-
-		void Release()
-		{
-			using func_t = decltype(&IMenu::Release);
-			REL::Relocation<func_t> func(REL::ID(50545));
-			return func(this);
-		}
 
 		void SetFlags(uint32_t _flags)
 		{
