@@ -1,4 +1,9 @@
 #pragma once
+#include "RE/B/BSTArray.h"
+#include "RE/B/BSTEvent.h"
+#include "RE/B/BSInputEventReceiver.h"
+#include "RE/B/BSTScatterTable.h"
+#include "RE/I/IMenu.h"
 
 namespace RE
 {
@@ -17,6 +22,8 @@ namespace RE
 	struct MenuPauseChangeEvent;
 	struct MenuPauseCounterChangeEvent;
 	struct TutorialEvent;
+	struct MenuOpenCloseEvent;
+	struct MenuModeChangeEvent;
 
 	class UI :
 		//public BSTSingletonSDM<UI>,
@@ -34,29 +41,15 @@ namespace RE
 	public:
 		SF_RTTI_VTABLE(UI);
 
-		struct Entry
+		struct UIMenuEntry
 		{
-			BSFixedString menuName;
-			IMenu*        menuPtr;
-			void** (*InitFunctor)(void**);
-			uint64_t      unk18;
-			uint64_t      unk20;
-			uint64_t      unk28;
-			uint32_t      unk30;
-			uint32_t      unk34;
-		};
+			using Create_t = IMenu**(IMenu**);
 
-		struct Map
-		{
-			uint64_t unk418;
-			uint64_t unk420;
-			uint64_t unk428;
-			uint64_t unk430;
-			uint64_t unk438;
-			uint64_t unk440;
-			Entry*   entries;
-			uint64_t capacity;
-			uint64_t remaining;
+			Scaleform::Ptr<IMenu> menu;
+			Create_t*             initFunc;
+			void*                 unk18 = nullptr;
+			uint64_t			  unk20 = 1;
+			uint64_t			  unk28 = 0;
 		};
 
 		template <class T>
@@ -90,15 +83,17 @@ namespace RE
 			GetEventSource<T>()->UnregisterSink(a_sink);
 		}
 
-		std::uint8_t                    pad178[0x278];  // 178
-		BSTArray<Scaleform::Ptr<IMenu>> menuStack;      // 3F0
-		std::uint8_t                    pad02[0x18];
-		Map                             menus;  // 418
-		void*                           unk460_4F8[(0x4F8 - 0x460) >> 3];
-		uint16_t                        unk4F8;
-		bool                            menusVisible;  // 4FA
+		std::uint8_t                           pad178[0x278];  // 178
+		BSTArray<Scaleform::Ptr<IMenu>>        menuStack;      // 3F0
+		std::uint8_t                           pad02[0x18];
+		uint64_t                               unk418;
+		uint64_t                               unk420;
+		BSTHashMap<BSFixedString, UIMenuEntry> menuMap;  // 428
+		void*                                  unk460_4F8[(0x4F8 - 0x460) >> 3];
+		uint16_t                               unk4F8;
+		bool                                   menusVisible;  // 4FA
 	};
 	static_assert(offsetof(UI, menuStack) == 0x3F0);
-	static_assert(offsetof(UI, menus) == 0x418);
+	static_assert(offsetof(UI, menuMap) == 0x428);
 	static_assert(offsetof(UI, menusVisible) == 0x4FA);
 }
