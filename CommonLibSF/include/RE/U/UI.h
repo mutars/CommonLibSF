@@ -88,12 +88,13 @@ namespace RE
 		std::uint8_t                           pad02[0x18];
 		uint64_t                               unk418;
 		uint64_t                               unk420;
-		BSTHashMap<BSFixedString, UIMenuEntry> menuMap;  // 428
-		void*                                  unk460_4F8[(0x4F8 - 0x460) >> 3];
+		uint64_t                               unk428;
+		BSTHashMap<BSFixedString, UIMenuEntry> menuMap;  //430
+		void*                                  unk460_4F8[18];
 		uint16_t                               unk4F8;
 		bool                                   menusVisible;  // 4FA
 	};
 	static_assert(offsetof(UI, menuStack) == 0x3F0);
-	static_assert(offsetof(UI, menuMap) == 0x428);
+	static_assert(offsetof(UI, menuMap) == 0x430);
 	static_assert(offsetof(UI, menusVisible) == 0x4FA);
 }
