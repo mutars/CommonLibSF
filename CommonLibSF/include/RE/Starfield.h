@@ -182,6 +182,8 @@
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSFloat3DCurve.h"
 #include "RE/B/BSFloatCurve.h"
+#include "RE/B/BSInputEnableLayer.h"
+#include "RE/B/BSInputEnableManager.h"
 #include "RE/B/BSInputEventReceiver.h"
 #include "RE/B/BSInputEventUser.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
