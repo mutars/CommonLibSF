@@ -312,6 +312,7 @@
 #include "RE/S/ScaleformGFxState.h"
 #include "RE/S/ScaleformGFxStateBag.h"
 #include "RE/S/ScaleformGFxValue.h"
+#include "RE/S/ScaleformMemoryHeap.h"
 #include "RE/S/ScaleformPtr.h"
 #include "RE/S/ScaleformRefCount.h"
 #include "RE/S/Script.h"

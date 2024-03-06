@@ -43,7 +43,7 @@ namespace RE
 
 		struct UIMenuEntry
 		{
-			using Create_t = IMenu**(IMenu**);
+			using Create_t = Scaleform::Ptr<IMenu>*(Scaleform::Ptr<IMenu>*);
 
 			Scaleform::Ptr<IMenu> menu;
 			Create_t*             initFunc;
@@ -69,6 +69,29 @@ namespace RE
 			using func_t = decltype(&UI::IsMenuOpen);
 			REL::Relocation<func_t> func{ ID::UI::IsMenuOpen };
 			return func(this, a_name);
+		}
+
+		bool IsMenuRegistered(const BSFixedString& a_name)
+		{
+			return menuMap.contains(a_name);
+		}
+
+		template <class T>
+			requires(std::derived_from<T, IMenu>)
+		bool RegisterMenu(const BSFixedString& a_name)
+		{
+			if (menuMap.contains(a_name))
+				return false;
+
+			auto& entry = menuMap[a_name];
+			entry.initFunc = [](Scaleform::Ptr<IMenu>* menu) {
+				auto createdMenu = new T();
+				REL::Relocation<Scaleform::Ptr<IMenu>*(Scaleform::Ptr<IMenu>*, T*)> CopyRef(REL::ID(80375));
+				CopyRef(menu, createdMenu);
+				return menu;
+			};
+
+			return true;
 		}
 
 		template <class T>

@@ -4,7 +4,8 @@ namespace RE
 {
 	enum UIMessage : uint32_t
 	{
-		kShow = 0
+		kShow = 0,
+		kHide = 2
 	};
 
 	class UIMessageQueue

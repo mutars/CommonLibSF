@@ -499,6 +499,11 @@ namespace RE
 			return entry ? make_iterator(entry) : end();
 		}
 
+		bool contains(const key_type& a_key) const
+		{
+			return find(a_key) != end();
+		}
+
 		void reserve(size_type a_count)
 		{
 			if (a_count <= uiSize) {
@@ -520,6 +525,15 @@ namespace RE
 			auto entries = get_entries();
 			clear_entries(0, uiSize);
 			uiFree = uiSize;
+		}
+
+		mapped_type& operator[](const key_type& a_key)
+		{
+			if (auto iter = find(a_key); iter != end()) {
+				return iter->Value;
+			} else {
+				return insert(value_type{ a_key, mapped_type{} }).first->Value;
+			}
 		}
 
 	private:

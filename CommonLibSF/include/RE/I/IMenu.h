@@ -6,6 +6,7 @@
 #include "RE/S/SWFToCodeFunctionHandler.h"
 #include "RE/S/ScaleformGFxMovie.h"
 #include "RE/S/ScaleformGFxValue.h"
+#include "RE/S/ScaleformMemoryHeap.h"
 
 namespace RE
 {
@@ -39,7 +40,15 @@ namespace RE
 			using func_t = void(*)(IMenu*);
 			REL::Relocation<func_t> func(REL::ID(187216));
 			func(this);
-		} 
+		}
+
+		void* operator new(std::size_t count) { return Scaleform::MemoryHeapPT::GetSingleton()->Allocate(count, 0); }
+		void* operator new(std::size_t count, std::align_val_t) { return Scaleform::MemoryHeapPT::GetSingleton()->Allocate(count, 0); }
+
+		void operator delete(void* a_ptr) { Scaleform::MemoryHeapPT::GetSingleton()->Free(a_ptr); }
+		void operator delete(void* a_ptr, std::align_val_t) { Scaleform::MemoryHeapPT::GetSingleton()->Free(a_ptr); }
+		void operator delete(void* a_ptr, std::size_t) { Scaleform::MemoryHeapPT::GetSingleton()->Free(a_ptr); }
+		void operator delete(void* a_ptr, std::size_t, std::align_val_t) { Scaleform::MemoryHeapPT::GetSingleton()->Free(a_ptr); }
 
 		// override
 		virtual bool ShouldHandleEvent(const InputEvent* a_event) override
