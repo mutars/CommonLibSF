@@ -41,14 +41,23 @@ namespace RE
 		//add
 		virtual bool Unk1B() { return true; }  //1B
 
+		//custom add
+		virtual bool UseEventDispatcher()
+		{
+			return false;
+		}
+
 		//custom override
 		virtual bool LoadMovie(bool a_addEventDispatcher, bool a_arg2) override
 		{
-			a_addEventDispatcher = false;
+			a_addEventDispatcher = UseEventDispatcher();
 			bool result = IMenu::LoadMovie(a_addEventDispatcher, a_arg2);
-			if (result && menuObj.HasMember(CODE_OBJ_NAME)) {
-				MapCodeObjectFunctions();
-				menuObj.Invoke(ON_CODE_OBJ_CREATED_FUNC);
+			if (result && !a_addEventDispatcher && uiMovie && uiMovie->asMovieRoot) {
+				uiMovie->asMovieRoot->GetVariable(&menuObj, GetRootPath());
+				if (menuObj.IsObject() && menuObj.HasMember(CODE_OBJ_NAME)) {
+					MapCodeObjectFunctions();
+					menuObj.Invoke(ON_CODE_OBJ_CREATED_FUNC);
+				}
 			}
 			return result;
 		}
