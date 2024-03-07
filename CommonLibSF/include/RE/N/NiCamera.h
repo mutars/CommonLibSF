@@ -1,17 +1,10 @@
 #pragma once
 #include "RE/N/NiPoint3.h"
-
+#include "NiAVObject.h"
+#include "NiRect.h"
+#include "NiPoint2.h"
 namespace RE
 {
-	template <class T>
-	class NiRect
-	{
-	public:
-		T left;    // 00
-		T right;   // ??
-		T top;     // ??
-		T bottom;  // ??
-	};
 
 	class NiFrustum
 	{
@@ -60,12 +53,12 @@ namespace RE
 			float trace = (worldPt.x * worldToCam[3][0]) + (worldPt.y * worldToCam[3][1]) + ((worldPt.z * worldToCam[3][2]) + worldToCam[3][3]);
 			if (trace <= 0.00001f) {
 				return result;
-			}
+				}
 
 			float traceInv = 1.0f / trace;
 			result.x = (((worldPt.y * worldToCam[0][1]) + (worldPt.x * worldToCam[0][0])) + ((worldPt.z * worldToCam[0][2]) + worldToCam[0][3])) * traceInv;
 			result.y = (((worldPt.y * worldToCam[1][1]) + (worldPt.x * worldToCam[1][0])) + ((worldPt.z * worldToCam[1][2]) + worldToCam[1][3])) * traceInv;
-			return result;
+				return result;
 		}
 
 		//Same as WorldToScreen, but normalizes X and Y to the 0 to 1 range,
@@ -79,14 +72,28 @@ namespace RE
 			return result;
 		}
 
-		float         unk[20];
-		float         worldToCam[4][4];
-		NiFrustum     viewFrustum;
-		float         minNearPlaneDist;
-		float         maxFarNearRatio;
-		NiRect<float> port;
-		float         lodAdjust;
-		float         unk2[24];
+		virtual void* UpdateWorldData(NiUpdateData* data) override;
+		virtual void* UpdateTransformAndBounds(NiUpdateData* data) override;  // calls UpdateWorldData if flags & 4 == 0 also calls unk78 with 0 also flips flags if they are in specific state
+		virtual void* UpdateTransforms(NiUpdateData* data) override;          // calls UpdateWorldData if flags & 4 != 0
+		virtual void* updateWorldBoundFromWorldTranslate();
+
+		uint32_t unk38{ 0xFFFFFF }; //130
+		uint8_t pad_0133[12]; //134
+		float offsetMatrix[4][4]; // 140 diagonal 1.0f
+		float worldToCam[4][4];  // 180 last column changes when moving
+		NiFrustum viewFrustum;       // 0x1C0
+		float    minNearPlaneDist;  // 1DC
+		float    maxFarNearRatio;   // 1E0
+		NiRect<float> port;     // 1E4
+		NiRect<float> port2;	// 1F4
+		float m_fLODAdjust; // 204
+		uint8_t flags2; // 210
+		uint8_t pad_0211[20];
 	};
+	static_assert(offsetof(NiCamera, unk38) == 0x130);
+	static_assert(offsetof(NiCamera, offsetMatrix) == 0x140);
+	static_assert(offsetof(NiCamera, viewFrustum) == 0x1C0);
+	static_assert(offsetof(NiCamera, port) == 0x1E4);
+	static_assert(sizeof(NiCamera) == 0x220);
 	static_assert(offsetof(NiCamera, NiCamera::worldToCam) == 384);
 }

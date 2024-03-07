@@ -22,7 +22,7 @@ namespace RE
 	struct MenuPauseChangeEvent;
 	struct MenuPauseCounterChangeEvent;
 	struct TutorialEvent;
-	struct MenuOpenCloseEvent;
+	class MenuOpenCloseEvent;
 	struct MenuModeChangeEvent;
 
 	class UI :

@@ -7,12 +7,9 @@ namespace RE
 {
 	class ButtonEvent;
 	class CharacterEvent;
-	class CursorMoveEvent;
 	class DeviceConnectEvent;
 	class InputEvent;
 	class KinectEvent;
-	class MouseMoveEvent;
-	class ThumbstickEvent;
 
 	class InputEvent
 	{
@@ -45,7 +42,7 @@ namespace RE
 		};
 
 		virtual ~InputEvent() = default;  //00
-		virtual bool          Unk01() { return false; }
+		virtual bool          hasIdCode() { return false; }
 		virtual BSFixedString GetUserEventOrDisabled() {}
 
 		uint32_t    deviceType;  //08
@@ -54,7 +51,7 @@ namespace RE
 		uint32_t    pad14;
 		InputEvent* next;      //18
 		uint32_t    timeCode;  //20
-		uint32_t    status;
+		uint32_t    status;    //24 or mark as dirty
 	};
 
 	class IDEvent : public InputEvent
@@ -65,6 +62,38 @@ namespace RE
 		uint32_t      idCode;     //30
 		bool          disabled;   //34
 	};
+
+	class MouseMoveEvent : public IDEvent
+	{
+	public:
+		virtual ~MouseMoveEvent() = default;
+
+		float deltaX;  //38
+		float deltaY;  //3C
+	};
+	static_assert(sizeof(MouseMoveEvent) == 0x40);
+
+	class CursorMoveEvent : public IDEvent
+	{
+	public:
+		virtual ~CursorMoveEvent() = default;
+
+		uint64_t  unk38;  //38
+		uint8_t  unk40;  //40
+	};
+	static_assert(sizeof(CursorMoveEvent) == 0x48);
+
+
+	class ThumbstickEvent : public IDEvent
+	{
+		public:
+		virtual ~ThumbstickEvent() = default;
+
+		float deltaX;  //38
+		float deltaY;  //3C
+		uint16_t unk40; //40
+	};
+	static_assert(sizeof(ThumbstickEvent) == 0x48);
 
 	class ButtonEvent : public IDEvent
 	{
@@ -104,7 +133,7 @@ namespace RE
 		SF_HEAP_REDEFINE_NEW(BSInputEventUser);
 
 		// members
-		std::uint8_t pad08[0x30];                        // 08
+		std::uint8_t pad08[0x30];                        // 08 pad08[8] - BSStringsPool* array of supported event types a1->pad08[24] event type
 		bool         inputEventHandlingEnabled{ true };  // 38
 	};
 	static_assert(sizeof(BSInputEventUser) == 0x40);

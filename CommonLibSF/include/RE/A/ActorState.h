@@ -15,7 +15,7 @@ namespace RE
 		virtual void Unk_31();  // 31
 		virtual void Unk_32();  // 32
 		virtual void Unk_33();  // 33
-		virtual void Unk_34();  // 34
+		virtual void Unk_34();  // 34 // return movement state
 
 		// members
 		std::uint32_t actorState1;  // 08

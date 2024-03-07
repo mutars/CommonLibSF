@@ -5,11 +5,11 @@
 #include "RE/B/BGSPreviewTransform.h"
 #include "RE/N/NiPoint3.h"
 #include "RE/T/TESObject.h"
+#include <RE/N/NiAVObject.h>
 
 namespace RE
 {
 	class BGSVoiceType;
-	class NiAVObject;
 
 	class TESBoundObject : public TESObject
 	{

@@ -15,6 +15,7 @@
 #include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/T/TESHandleForm.h"
+#include <RE/N/NiAVObject.h>
 
 namespace RE
 {
@@ -30,7 +31,6 @@ namespace RE
 	class BGSScene;
 	class BSAnimationGraphEvent;
 	class BSTransformDeltaEvent;
-	class NiAVObject;
 	class TESBoundObject;
 	class TESModel;
 	class TESObjectCELL;

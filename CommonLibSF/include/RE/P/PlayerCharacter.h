@@ -2,14 +2,16 @@
 
 #include "RE/A/Actor.h"
 #include "RE/I/IMovementPlayerControlsFilter.h"
+#include "RE/N/NiCamera.h"
 
 namespace RE
 {
-	class MenuModeChangeEvent;
+	struct MenuModeChangeEvent;
 	class MenuOpenCloseEvent;
 	class OtherEventEnabledEvent;
 	class TESFormDeleteEvent;
 	class TESHitEvent;
+	class NiCamera;
 	class UserEventEnabledEvent;
 
 	struct AnimationGraphDependentEvent;
@@ -313,7 +315,7 @@ namespace RE
 		std::uint64_t  unk0DD0;          // 0DD0
 		std::uint64_t  unk0DD8;          // 0DD8
 		std::uint64_t  unk0DE0;          // 0DE0
-		std::uint64_t  unk0DE8;          // 0DE8
+		NiCamera*  nicameraRoot;          // 0DE8 NiCAmera root
 		std::uint64_t  unk0DF0;          // 0DF0
 		std::uint64_t  unk0DF8;          // 0DF8
 		std::uint64_t  unk0E00;          // 0E00
@@ -408,7 +410,9 @@ namespace RE
 		std::uint64_t  unk10C8;          // 10C8
 		float          playerGravity;    // 10D0
 		std::uint32_t  unk10D4;          // 10D4
-		std::uint64_t  unk10D8;          // 10D8
+		std::uint8_t  unk_trail_bytes[512];          // 10D8
+
 	};
-	static_assert(sizeof(PlayerCharacter) == 0x10E0);
+	static_assert(sizeof(PlayerCharacter) == 0x12E0);
+	static_assert(offsetof(PlayerCharacter, currentLocation) == 0x0ED8);
 }
