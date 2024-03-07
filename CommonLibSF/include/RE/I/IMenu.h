@@ -79,7 +79,6 @@ namespace RE
 
 		virtual bool LoadMovie(bool a_addEventDispatcher, bool a_arg2)			// 06
 		{
-			a_addEventDispatcher = false;
 			using func_t = decltype(&IMenu::LoadMovie);
 			REL::Relocation<func_t> func(REL::ID(187240));
 			return func(this, a_addEventDispatcher, a_arg2);

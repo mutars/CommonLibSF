@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/I/IMenu.h"
+#include "RE/S/ScaleformGFxASMovieRootBase.h"
 
 namespace RE
 {
@@ -8,6 +9,9 @@ namespace RE
 		public IMenu  // 00
 	{
 	public:
+		static constexpr const char* CODE_OBJ_NAME{ "BGSCodeObj" };
+		static constexpr const char* ON_CODE_OBJ_CREATED_FUNC{ "onCodeObjCreate" };
+
 		SF_RTTI_VTABLE(GameMenuBase);
 
 		GameMenuBase()
@@ -36,5 +40,34 @@ namespace RE
 
 		//add
 		virtual bool Unk1B() { return true; }  //1B
+
+		//custom override
+		virtual bool LoadMovie(bool a_addEventDispatcher, bool a_arg2) override
+		{
+			a_addEventDispatcher = false;
+			bool result = IMenu::LoadMovie(a_addEventDispatcher, a_arg2);
+			if (result && menuObj.HasMember(CODE_OBJ_NAME)) {
+				MapCodeObjectFunctions();
+				menuObj.Invoke(ON_CODE_OBJ_CREATED_FUNC);
+			}
+			return result;
+		}
+
+		void RegisterNativeFunction(const char* a_name, uint64_t a_idx)
+		{
+			if (!uiMovie) {
+				return;
+			}
+
+			RE::Scaleform::GFx::Value codeObjVal;
+			menuObj.GetMember(CODE_OBJ_NAME, &codeObjVal);
+			if (!codeObjVal.IsObject()) {
+				return;
+			}
+
+			RE::Scaleform::GFx::Value funcVal;
+			uiMovie->asMovieRoot->CreateFunction(&funcVal, this, reinterpret_cast<void*>(a_idx));
+			codeObjVal.SetMember(a_name, funcVal);
+		}
 	};
 }
