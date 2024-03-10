@@ -8,6 +8,29 @@ namespace RE
 		kHide = 2
 	};
 
+	class IUIMessageData
+	{
+	public:
+		virtual ~IUIMessageData() = default;
+		virtual void* GetRTTI() = 0;
+	};
+
+	class UIMessageData
+	{
+	public:
+		virtual ~UIMessageData() = default;
+
+		UIMessage type; //08
+		//...more?
+	};
+
+	enum UI_MESSAGE_RESULT : int64_t
+	{
+		kHandled = 0,
+		kIgnore,
+		kPassOn
+	};
+
 	class UIMessageQueue
 	{
 	public:

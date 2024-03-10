@@ -42,6 +42,9 @@ namespace RE
 		virtual bool Unk1B() { return true; }  //1B
 
 		//custom add
+
+		//Do not set this to true unless your menu SWF has Beth's AS3 event backend.
+		//Otherwise, it will cause a CTD.
 		virtual bool UseEventDispatcher()
 		{
 			return false;

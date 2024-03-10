@@ -7,6 +7,7 @@
 #include "RE/S/ScaleformGFxMovie.h"
 #include "RE/S/ScaleformGFxValue.h"
 #include "RE/S/ScaleformMemoryHeap.h"
+#include "RE/U/UIMessageQueue.h"
 
 namespace RE
 {
@@ -86,11 +87,11 @@ namespace RE
 
 		virtual void Unk07() {}													// 07
 
-		virtual uint64_t ReceiveUserEvent(void* a_event)						// 08
+		virtual UI_MESSAGE_RESULT ProcessMessage(UIMessageData& a_message)		// 08
 		{
-			using func_t = decltype(&IMenu::ReceiveUserEvent);
+			using func_t = decltype(&IMenu::ProcessMessage);
 			REL::Relocation<func_t> func(REL::ID(187247));
-			return func(this, a_event);
+			return func(this, a_message);
 		}
 		
 		virtual bool Unk09()													// 09
