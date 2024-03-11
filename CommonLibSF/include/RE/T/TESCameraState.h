@@ -25,7 +25,7 @@ namespace RE
 		virtual void Unk_05(void);  // 14
 		virtual void Unk_06(void);  // 15
 		virtual void Unk_07(void);  // 16
-		virtual void updatePositionDelta(NiPoint3* delta);  // 17
+		virtual void handleInputEvent(NiPoint3* delta);  // 17
 		virtual void Unk_09(void);  // 18
 		virtual void Unk_0A(void);  // 19
 		virtual void Unk_0B(void);  // 20

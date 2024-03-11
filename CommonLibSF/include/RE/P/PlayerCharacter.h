@@ -313,7 +313,7 @@ namespace RE
 		std::uint64_t  unk0DC0;          // 0DC0
 		std::uint64_t  unk0DC8;          // 0DC8
 		std::uint64_t  unk0DD0;          // 0DD0
-		std::uint64_t  unk0DD8;          // 0DD8
+		NiNode*  bFadeNode;          // 0DD8
 		std::uint64_t  unk0DE0;          // 0DE0
 		NiCamera*  nicameraRoot;          // 0DE8 NiCAmera root
 		std::uint64_t  unk0DF0;          // 0DF0

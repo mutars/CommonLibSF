@@ -68,8 +68,8 @@ namespace RE
 	public:
 		virtual ~MouseMoveEvent() = default;
 
-		float deltaX;  //38
-		float deltaY;  //3C
+		int deltaX;  //38
+		int deltaY;  //3C
 	};
 	static_assert(sizeof(MouseMoveEvent) == 0x40);
 

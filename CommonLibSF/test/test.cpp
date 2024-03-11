@@ -10,5 +10,9 @@ int main(int argc, char *argv[])
 	(void)fps;
 	RE::PlayerControls::Manager* pcm = nullptr;
 	(void)pcm;
+	RE::Camera::Manager* cm = nullptr;
+	(void)cm;
+	RE::AnimationManager* am = nullptr;
+	(void)am;
 	return 0;
 }

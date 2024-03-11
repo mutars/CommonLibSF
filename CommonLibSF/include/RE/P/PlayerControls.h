@@ -29,14 +29,14 @@ namespace RE
 			virtual void Unk_14(void);  // 14
 			virtual void Unk_15(void);  // 15
 
-			void*    sharedBuffer;  // passed from 0x3C Manager pointer
+			float*   sharedBuffer;  // passed from 0x3C Manager pointer
 			uint16_t unk48;
 			uint8_t  unk4A;
 		};
 		class NvidiaStreamlineInputHandler : public BSInputEventUser
 		{
 		public:
-			void* sharedBuffer;  // 0x40 passed from 0x3C Manager pointer
+			float*  sharedBuffer;  // 0x40 passed from 0x3C Manager pointer
 			uint16_t unk48;
 			uint8_t unk4A;
 		}; 
@@ -132,17 +132,17 @@ namespace RE
 			float unk4c; // +-1 forward backward //shared buffer with all handlers
 			float unk50; // +-1 left right
 			float unk54; // +-1 up down
-			float unk58; // horizontal rotation
-			float unk5c; // vertical rotation
+			float unk58; // horizontal rotation 
+			float unk5c; // vertical rotation 
 			float unk60;
 			float unk64;
 			float unk68;
 			float unk6c;
-			float unk70;
-			float unk74;
-			float unk78;
-			float unk7c;
-			float unk80;
+			float unk70; // unk4c +
+			float unk74; // unk50 +
+			float unk78; // unk54 + 
+			float unk7c; // = unk58 + unk2dc
+			float unk80; // = unk5c + unk2d8
 			float unk84;
 			float unk88;
 			float unk8c;
@@ -154,13 +154,13 @@ namespace RE
 			float unkA4;
 			float unkA8;
 			float unkAc;
-			float unkB0;
+			float unkB0; // possible current state
 			float unkB4;
-			float unkB8;
+			float unkB8; // TESCAmeraState
 			float unkBc;
-			float unkC0;
+			float unkC0; // possible index of current state or currentState pointer
 			float unkC4;
-			float unkC8;
+			float unkC8; // possitble TESTCameraSTate or pointer to states
 			float unkCc;
 			float unkD0;
 			float unkD4;
@@ -243,6 +243,10 @@ namespace RE
 			PlayerInputHandler* weaponSightedActionHandler; // 0x2C0
 			PlayerInputHandler* stabornPowerHandler; // 0x2C8
 			NvidiaStreamlineInputHandler* nvidiaStreamlineInputHandler; // 0x2D0
+			// pads
+			float unk2D8; // autorotation horizontal
+			float unk2DC; // autorotation vertical
+			uint8_t lock;
 		};
 		//check_size<offsetof(Manager, unk4c), 0x4c> trace_size11;
 		static_assert(offsetof(Manager, unk4c) == 0x4C);
