@@ -728,7 +728,9 @@ namespace RE::Scaleform::GFx
 		void ReleaseManagedValue()
 		{
 			assert(_value.data && _objectInterface);
-			_objectInterface->ObjectRelease(this, _value.data);
+			if (_unk00) {
+				_objectInterface->ObjectRelease(this, _value.data);
+			}
 			_objectInterface = nullptr;
 		}
 
