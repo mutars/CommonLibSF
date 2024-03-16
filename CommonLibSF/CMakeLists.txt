@@ -43,7 +43,7 @@ else()
   CPMAddPackage(
     GITHUB_REPOSITORY gabime/spdlog
     VERSION 1.12.0
-    OPTIONS "SPDLOG_USE_STD_FORMAT ON"
+    OPTIONS "SPDLOG_COMPILED_LIB ON"
   )
 endif()
 

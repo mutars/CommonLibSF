@@ -13,7 +13,7 @@ add_rules("mode.debug", "mode.release")
 
 -- require packages
 add_requires("xbyak")
-add_requires("spdlog", { configs = { header_only = false, std_format = true } })
+add_requires("spdlog", { configs = { header_only = false, std_format = false,  fmt_external: false} })
 
 -- include subprojects
 includes("CommonLibSF")
