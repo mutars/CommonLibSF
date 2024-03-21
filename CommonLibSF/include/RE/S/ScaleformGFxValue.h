@@ -322,8 +322,9 @@ namespace RE::Scaleform::GFx
 
 			// members
 			MovieImpl* movieRoot;  // 08
+			Value* lastValue;
 		};
-		static_assert(sizeof(ObjectInterface) == 0x10);
+		static_assert(sizeof(ObjectInterface) == 0x18);
 
 		using ArrayVisitor = ObjectInterface::ArrVisitor;
 		using ObjectVisitor = ObjectInterface::ObjVisitor;
@@ -728,15 +729,15 @@ namespace RE::Scaleform::GFx
 		void ReleaseManagedValue()
 		{
 			assert(_value.data && _objectInterface);
-			if (_unk00) {
+			if (_prev) {
 				_objectInterface->ObjectRelease(this, _value.data);
 			}
 			_objectInterface = nullptr;
 		}
 
 		// members
-		void*                                     _unk00{};                        // 00
-		void*                                     _unk08{};                        // 08
+		Value*                                    _prev{};                         // 00
+		Value*                                    _next{};                         // 08
 		ObjectInterface*                          _objectInterface{};              // 10
 		stl::enumeration<ValueType, std::int32_t> _type{ ValueType::kUndefined };  // 18
 		ValueUnion                                _value{};                        // 20
