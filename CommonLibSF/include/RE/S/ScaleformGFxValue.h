@@ -341,14 +341,19 @@ namespace RE::Scaleform::GFx
 			}
 		}
 
-		Value(Value&& a_rhs) noexcept :
-			_objectInterface(a_rhs._objectInterface),
-			_type(a_rhs._type),
-			_value(std::move(a_rhs._value)),
-			_dataAux(a_rhs._dataAux)
+		Value(Value&& a_rhs) noexcept
 		{
-			a_rhs._objectInterface = nullptr;
+			_type = a_rhs._type;
+			_value = a_rhs._value;
+			_dataAux = a_rhs._dataAux;
+
+			if (a_rhs.IsManagedValue()) {
+				AcquireManagedValue(a_rhs);
+				a_rhs.ReleaseManagedValue();
+			}
+
 			a_rhs._type = ValueType::kUndefined;
+			a_rhs._value = 0;
 			a_rhs._dataAux = 0;
 		}
 
@@ -420,15 +425,17 @@ namespace RE::Scaleform::GFx
 					ReleaseManagedValue();
 				}
 
-				_objectInterface = a_rhs._objectInterface;
-				a_rhs._objectInterface = nullptr;
-
 				_type = a_rhs._type;
-				a_rhs._type = ValueType::kUndefined;
-
-				_value = std::move(a_rhs._value);
-
+				_value = a_rhs._value;
 				_dataAux = a_rhs._dataAux;
+
+				if (a_rhs.IsManagedValue()) {
+					AcquireManagedValue(a_rhs);
+					a_rhs.ReleaseManagedValue();
+				}
+
+				a_rhs._type = ValueType::kUndefined;
+				a_rhs._value = 0;
 				a_rhs._dataAux = 0;
 			}
 			return *this;
@@ -729,9 +736,7 @@ namespace RE::Scaleform::GFx
 		void ReleaseManagedValue()
 		{
 			assert(_value.data && _objectInterface);
-			if (_prev) {
-				_objectInterface->ObjectRelease(this, _value.data);
-			}
+			_objectInterface->ObjectRelease(this, _value.data);
 			_objectInterface = nullptr;
 		}
 
