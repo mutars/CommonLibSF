@@ -389,14 +389,14 @@ namespace RE
 		void                                Unlock();
 
 		// members
-		OBJ_REFR                                      data;           // 80
-		BSGuarded<BGSInventoryList*, BSReadWriteLock> inventoryList;  // B0
-		TESObjectCELL*                                parentCell;     // C0
-		BSGuarded<LOADED_REF_DATA*, BSReadWriteLock>  loadedData;     // C8
-		BSTSmartPointer<ExtraDataList>                extraDataList;  // D8
-		std::uint16_t                                 scale;          // E0
-		std::uint8_t                                  unkE2;          // E2
-		std::uint8_t                                  flags;          // E3
+		OBJ_REFR                                      data;           // 78
+		BSGuarded<BGSInventoryList*, BSReadWriteLock> inventoryList;  // 98
+		TESObjectCELL*                                parentCell;     // A8
+		BSGuarded<LOADED_REF_DATA*, BSReadWriteLock>  loadedData;     // B0
+		BSTSmartPointer<ExtraDataList>                extraDataList;  // C0
+		std::uint16_t                                 scale;          // C8
+		std::uint8_t                                  unkE2;          // CA
+		std::uint8_t                                  flags;          // CB
 
 	private:
 		void AddLockChange();
