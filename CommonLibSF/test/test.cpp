@@ -14,5 +14,7 @@ int main(int argc, char *argv[])
 	(void)cm;
 	RE::AnimationManager* am = nullptr;
 	(void)am;
+    RE::BSSceneNode* bsn = nullptr;
+    (void)bsn;
 	return 0;
 }

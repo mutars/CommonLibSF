@@ -17,5 +17,5 @@ namespace RE
 		virtual void* getFlags(int* flagsOut) override;
 		uint32_t m_flags; // 0x150
 	};
-	static_assert(sizeof(BSSceneNode) == 0x158);
+	static_assert(sizeof(BSSceneNode) == 0x160);
 }

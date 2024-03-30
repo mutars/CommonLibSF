@@ -34,6 +34,13 @@ namespace RE
 			return func(this, worldPt, leftBoundary, rightBoundary);
 		}
 
+        void SetNimFrustumInternal(NiFrustum* frustum)
+        {
+            using func_t = decltype(&NiCamera::SetNimFrustumInternal);
+            REL::Relocation<func_t> func{ REL::ID(210419) };
+            return func(this, frustum);
+        }
+
 		//The returned X and Y are in the range -1 to 1, with 1 being top right and -1 being bottom left.
 		//The returned Z is the distance from the camera to the worldPt, with negative values meaning the
 		//camera is facing away from the worldPt.
@@ -95,5 +102,5 @@ namespace RE
 	static_assert(offsetof(NiCamera, viewFrustum) == 0x1C0);
 	static_assert(offsetof(NiCamera, port) == 0x1E4);
 	static_assert(sizeof(NiCamera) == 0x220);
-	static_assert(offsetof(NiCamera, NiCamera::worldToCam) == 384);
+	static_assert(offsetof(NiCamera, worldToCam) == 384);
 }

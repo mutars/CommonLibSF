@@ -228,6 +228,11 @@ namespace RE::ID
 		inline constexpr REL::ID ToEulerAnglesXYZ{ 210095 };
 	}
 
+    namespace NiCamera
+    {
+        inline constexpr REL::ID setFrustum{ 210419 };
+    }
+
 	namespace ObjectBindPolicy
 	{
 		inline constexpr REL::ID BindObject{ 195981 };
