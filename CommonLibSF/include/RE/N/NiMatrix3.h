@@ -98,6 +98,7 @@ namespace RE
 			return func(this, a_x, a_y, a_z);
 		}
 
+
 		NiMatrix3 Transpose() const
 		{
 			NiMatrix3 result;

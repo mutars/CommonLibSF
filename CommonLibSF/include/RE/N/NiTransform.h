@@ -20,6 +20,16 @@ namespace RE
 			scale = 1.0F;
 		}
 
+		void copyFrom(const NiTransform* a_rhs)
+		{
+			if(a_rhs == nullptr) {
+				return;
+			}
+			using func_t = decltype(&NiTransform::copyFrom);
+			REL::Relocation<func_t> func{ ID::NiTransform::copyFrom };
+			func(this, a_rhs);
+		}
+
 		NiTransform operator*(const NiTransform& a_rhs) const
 		{
 			NiTransform result;

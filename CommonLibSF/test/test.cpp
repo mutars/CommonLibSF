@@ -16,5 +16,7 @@ int main(int argc, char *argv[])
 	(void)am;
     RE::BSSceneNode* bsn = nullptr;
     (void)bsn;
+	RE::CreationRendererPrivate::TemporalAA_idTech7RenderPass* trp = nullptr;
+	(void)trp;
 	return 0;
 }

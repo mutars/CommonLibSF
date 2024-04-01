@@ -226,6 +226,12 @@ namespace RE::ID
 	namespace NiMatrix3
 	{
 		inline constexpr REL::ID ToEulerAnglesXYZ{ 210095 };
+		inline constexpr REL::ID copyFrom{ 73678 };
+	}
+
+	namespace NiTransform
+	{
+		inline constexpr REL::ID copyFrom{ 36487 };
 	}
 
     namespace NiCamera

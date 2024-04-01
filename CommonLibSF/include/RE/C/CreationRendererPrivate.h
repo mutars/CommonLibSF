@@ -1,6 +1,8 @@
 #pragma once
 
-namespace CreationRendererPrivate {
+//#include "RE/utils.h"
+
+namespace RE::CreationRendererPrivate {
     class RenderPass {
     public:
         virtual ~RenderPass();
@@ -31,8 +33,17 @@ namespace CreationRendererPrivate {
         void* unk_78;
         void* unk_80;
         void* unk_88;
+        char  unk_90;
+        uint8_t  unk_91[100];
 
     };
+//    check_size<sizeof(RenderPass), 0xF8> trace_size11;
+    static_assert(sizeof(RenderPass) == 0xF8);
+
+    class TemporalAA_idTech7RenderPass: public RenderPass {
+
+    }; //size F8
+    static_assert(sizeof(TemporalAA_idTech7RenderPass) == 0xF8);
 
     // REnder Graph struct REL::ID(885886)
     // RenderSceneSubGraph  (qword_1459AA8D8 + 232)
