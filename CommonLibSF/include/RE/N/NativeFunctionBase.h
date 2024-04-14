@@ -46,7 +46,7 @@ namespace RE::BSScript
 			static_assert(sizeof(ParameterInfo) == 0x10);
 
 			virtual BSFixedString* GetName(void) override { return &_name; }
-			virtual BSFixedString* GetClassName(void) override { return &_className; }
+			virtual BSFixedString* _GetClassName(void) override { return &_className; }
 			virtual BSFixedString* GetStateName(void) override { return &_stateName; }
 			virtual std::uint64_t* GetReturnType(std::uint64_t* a_dst) override
 			{

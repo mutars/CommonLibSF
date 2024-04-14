@@ -17,11 +17,11 @@ namespace RE
 			SF_RTTI(BSTArrayBase__IAllocatorFunctor);
 
 			// add
-			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize) = 0;                                                                                                             // 00
-			virtual bool Reallocate(std::uint32_t a_minNewSizeInItems, std::uint32_t a_frontCopyCount, std::uint32_t a_shiftCount, std::uint32_t a_backCopyCount, std::uint32_t a_elemSize) = 0;  // 01
-			virtual void Deallocate() = 0;                                                                                                                                                        // 02
+			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize);                                                                                                             // 00
+			virtual bool Reallocate(std::uint32_t a_minNewSizeInItems, std::uint32_t a_frontCopyCount, std::uint32_t a_shiftCount, std::uint32_t a_backCopyCount, std::uint32_t a_elemSize);  // 01
+			virtual void Deallocate();                                                                                                                                                        // 02
 
-			virtual ~IAllocatorFunctor() = default;  // 03
+			virtual ~IAllocatorFunctor() {};  // 03
 
 			SF_HEAP_REDEFINE_NEW();
 		};
@@ -301,4 +301,156 @@ namespace RE
 
 	template <class T>
 	using BSScrapArray = BSTArray<T, BSScrapArrayAllocator>;
+
+    template <std::uint32_t N>
+    class BSTSmallArrayHeapAllocator
+    {
+    public:
+        using size_type = std::uint32_t;
+
+        constexpr BSTSmallArrayHeapAllocator() noexcept :
+                _capacity(0),
+                _local(1)
+        {}
+
+        inline BSTSmallArrayHeapAllocator(const BSTSmallArrayHeapAllocator& a_rhs) :
+                _capacity(0),
+                _local(1)
+        {
+            copy(a_rhs);
+        }
+
+        inline BSTSmallArrayHeapAllocator(BSTSmallArrayHeapAllocator&& a_rhs) :
+                _capacity(0),
+                _local(1)
+        {
+            copy(std::move(a_rhs));
+        }
+
+        inline ~BSTSmallArrayHeapAllocator() { release(); }
+
+        inline BSTSmallArrayHeapAllocator& operator=(const BSTSmallArrayHeapAllocator& a_rhs)
+        {
+            if (this != std::addressof(a_rhs)) {
+                copy(a_rhs);
+            }
+            return *this;
+        }
+
+        inline BSTSmallArrayHeapAllocator& operator=(BSTSmallArrayHeapAllocator&& a_rhs)
+        {
+            if (this != std::addressof(a_rhs)) {
+                copy(std::move(a_rhs));
+            }
+            return *this;
+        }
+
+        SF_HEAP_REDEFINE_NEW();
+
+        [[nodiscard]] constexpr void*       data() noexcept { return local() ? _data.local : _data.heap; }
+        [[nodiscard]] constexpr const void* data() const noexcept { return local() ? _data.local : _data.heap; }
+
+        [[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
+
+    protected:
+        void* allocate(std::size_t a_size)
+        {
+            if (a_size > N) {
+                const auto mem = malloc(a_size);
+                if (!mem) {
+                    stl::report_and_fail("out of memory"sv);
+                } else {
+                    std::memset(mem, 0, a_size);
+                    return mem;
+                }
+            } else {
+                return _data.local;
+            }
+        }
+
+        void deallocate(void* a_ptr)
+        {
+            if (a_ptr != _data.local) {
+                free(a_ptr);
+            }
+        }
+
+        constexpr void set_allocator_traits(void* a_data, std::uint32_t a_capacity, std::size_t a_typeSize) noexcept
+        {
+            _capacity = a_capacity;
+            if (a_capacity * a_typeSize > N) {
+                _local = 0;
+                _data.heap = a_data;
+            }
+        }
+
+    private:
+        union alignas(8) Data
+        {
+            void* heap;
+            char  local[N]{ 0 };
+        };
+
+        inline void copy(const BSTSmallArrayHeapAllocator& a_rhs)
+        {
+            release();
+
+            _capacity = a_rhs._capacity;
+            _local = a_rhs._local;
+
+            if (!local()) {
+                const auto mem = malloc(capacity());
+                if (!mem) {
+                    stl::report_and_fail("out of memory"sv);
+                } else {
+                    _data.heap = mem;
+                }
+            }
+
+            std::memcpy(data(), a_rhs.data(), capacity());
+        }
+
+        inline void copy(BSTSmallArrayHeapAllocator&& a_rhs)
+        {
+            release();
+
+            _capacity = a_rhs._capacity;
+            _local = a_rhs._local;
+            std::memmove(data(), a_rhs.data(), capacity());
+
+            std::memset(a_rhs.data(), 0, a_rhs.capacity());
+            a_rhs._capacity = N;
+            a_rhs._local = 1;
+        }
+
+        [[nodiscard]] constexpr bool local() const noexcept { return _local != 0; }
+
+        inline void release()
+        {
+            if (!local()) {
+                free(_data.heap);
+            }
+
+            std::memset(data(), 0, capacity());
+            _capacity = N;
+            _local = 1;
+        }
+
+        // members
+        std::uint32_t _capacity: 31;  // 00
+        std::uint32_t _local: 1;      // 00
+        Data          _data;          // 08
+    };
+	static_assert(sizeof(BSTSmallArrayHeapAllocator<16>) == 8+16);
+
+    template <class T, std::uint32_t N>
+    class BSTSmallArray :
+		public BSTArrayBase,
+        public BSTSmallArrayHeapAllocator<N>
+    {
+    };
+
+	using MultiViewAllocator = BSTArrayAllocatorFunctor<BSTSmallArrayHeapAllocator<16>>;
+	using RenderGraphBSTAllocator = BSTArrayAllocatorFunctor<BSTSmallArrayHeapAllocator<2688>>;
+
 }

@@ -196,10 +196,10 @@ namespace RE
 			BSStringPool::Entry* _data{};  // 0
 		};
 
-		extern template class BSFixedString<char, false>;
-		extern template class BSFixedString<char, true>;
-		extern template class BSFixedString<wchar_t, false>;
-		extern template class BSFixedString<wchar_t, true>;
+//		extern template class BSFixedString<char, false>;
+//		extern template class BSFixedString<char, true>;
+//		extern template class BSFixedString<wchar_t, false>;
+//		extern template class BSFixedString<wchar_t, true>;
 	}
 
 	using BSFixedString = detail::BSFixedString<char, false>;

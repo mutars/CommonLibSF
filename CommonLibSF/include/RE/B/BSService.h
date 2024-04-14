@@ -1,6 +1,6 @@
 #pragma once
 
-namespace BSService {
+namespace RE::BSService {
     namespace Detail {
         template <class T>
         struct ISubscriberTable {

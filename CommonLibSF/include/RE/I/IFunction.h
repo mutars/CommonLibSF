@@ -28,7 +28,7 @@ namespace RE::BSScript
 		};
 
 		virtual BSFixedString* GetName(void) = 0;
-		virtual BSFixedString* GetClassName(void) = 0;
+		virtual BSFixedString* _GetClassName(void) = 0;
 		virtual BSFixedString* GetStateName(void) = 0;
 		virtual std::uint64_t* GetReturnType(std::uint64_t* a_dst) = 0;
 		virtual std::uint64_t  GetNumParams(void) = 0;

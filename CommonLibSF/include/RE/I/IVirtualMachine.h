@@ -30,7 +30,7 @@ namespace RE
 		struct ILoader;
 		struct IObjectHandlePolicy;
 		struct LogEvent;
-		struct StatsEvent;
+			struct StatsEvent;
 
 		namespace UnlinkedTypes
 		{
