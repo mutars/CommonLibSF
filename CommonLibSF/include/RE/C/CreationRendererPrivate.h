@@ -1,4 +1,5 @@
 #pragma once
+
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/utils.h"
@@ -7,10 +8,15 @@ namespace RE::CreationRendererPrivate {
     class alignas(0) RenderPass {
     public:
         virtual ~RenderPass();
+
         virtual void unk_1();
+
         virtual void unk_2();
+
         virtual void unk_3();
+
         virtual void unk_4();
+
         virtual void unk_5(); //nimpl
         virtual void unk_6(); //nimpl
         virtual void unk_7(); //nimpl
@@ -44,56 +50,86 @@ namespace RE::CreationRendererPrivate {
         uint64_t unk_C8;
         uint64_t unk_D0;
         BSFixedString unk_D8;
-		RenderPass* pSelfOrParent;
+        RenderPass *pSelfOrParent;
         uint64_t unk_E8;
     };
 //    check_size<sizeof(RenderPass), 0xF8> trace_size11;
     static_assert(sizeof(RenderPass) == 0xF0);
 
-    class TemporalAA_idTech7RenderPass: public RenderPass {
+    class TemporalAA_idTech7RenderPass : public RenderPass {
 
     };
+
     static_assert(sizeof(TemporalAA_idTech7RenderPass) == 0xF0);
 
-    class RenderGraph: public RenderPass {
+    class RenderGraph : public RenderPass {
     public:
         ~RenderGraph() override;
-        virtual void updateOrAddSubGraphs(); // update views 
+
+        virtual void updateOrAddSubGraphs(); // update views
         virtual void unk_9();
+
         virtual void unk_10();
-        BSTArray<void*> arrayF0; // 0xF0 size of int32(a2->0x20)
+
+        BSTArray<void *> arrayF0; // 0xF0 size of int32(a2->0x20)
         uint8_t unk_100[0x228 - 0x100];
         BSTSmallArray<RenderGraph, 2688> renderGraphs; // 228h element size  0x150u 8 elementsx0x150 size
-		uint8_t unk_CB8[0xD20 - 0xCB8]; // 0xCC0
-		uint32_t renderGraphID; // 0xD20
-		uint32_t unk_D24; // some byteflag at 0xD26
+        uint8_t unk_CB8[0xD20 - 0xCB8]; // 0xCC0
+        uint32_t renderGraphID; // 0xD20
+        uint32_t unk_D24; // some byteflag at 0xD26
     };
+
     static_assert(sizeof(BSTSmallArray<uint32_t, 16>) == 0x20);
-    static_assert(sizeof(BSTSmallArray<RenderGraph, 2688>) == 2688+0x10);
-	static_assert(offsetof(RenderGraph, arrayF0) == 0xF0);
-	static_assert(offsetof(RenderGraph, renderGraphs) == 0x228);
-	static_assert(offsetof(RenderGraph, renderGraphID) == 0xD20);
+    static_assert(sizeof(BSTSmallArray<RenderGraph, 2688>) == 2688 + 0x10);
+    static_assert(offsetof(RenderGraph, arrayF0) == 0xF0);
+    static_assert(offsetof(RenderGraph, renderGraphs) == 0x228);
+    static_assert(offsetof(RenderGraph, renderGraphID) == 0xD20);
     static_assert(sizeof(RenderGraph) == 0xD28);
 
-    class RenderViewSubGraph: public RenderGraph {
+    class RenderViewSubGraph : public RenderGraph {
     public:
         ~RenderViewSubGraph() override;
 
-		uint32_t subViewId; // 0xD28
-		uint32_t unk_D2C; // pad
+        uint32_t subViewId; // 0xD28
+        uint32_t unk_D2C; // pad
     };
+
     static_assert(sizeof(RenderViewSubGraph) == 0xD30);
 
-    
-    class MainRenderGraph: public RenderGraph {
+
+    class MainRenderGraph : public RenderGraph {
     public:
-		~MainRenderGraph() override;
-		BSTSmallArray<uint32_t, 16>      multiViewDataArray; // 0xD28 4 elem 4 size represent viewIndexes from StorageTable::REnderGraph::MiltiView
-		BSTSmallArray<BSFixedString, 32> subGraphNames;
+        ~MainRenderGraph() override;
+
+        BSTSmallArray<uint32_t, 16> multiViewDataArray; // 0xD28 4 elem 4 size represent viewIndexes from StorageTable::REnderGraph::MiltiView
+        BSTSmallArray<BSFixedString, 32> subGraphNames;
     };
-	static_assert(offsetof(MainRenderGraph, multiViewDataArray) == 0xD28);
-	static_assert(offsetof(MainRenderGraph, subGraphNames) == 0xD48);
-	static_assert(sizeof(MainRenderGraph) == 0xD78);
+
+    static_assert(offsetof(MainRenderGraph, multiViewDataArray) == 0xD28);
+    static_assert(offsetof(MainRenderGraph, subGraphNames) == 0xD48);
+    static_assert(sizeof(MainRenderGraph) == 0xD78);
+
+
+    class RenderSceneSubGraph: public RenderGraph {
+        uint8_t flag; // 0xD28
+        uint8_t unk_D29;
+        uintptr_t unk_D30[0x40]; // 0xD30 64 pointers
+        uint64_t unk_F30;
+        uint64_t unk_F38;
+        uint32_t unk_F40;
+        uint32_t unk_F44;
+        uint32_t unk_F48;
+        uint32_t unk_F4C;
+        uint32_t unk_F50;
+        uint32_t unk_F54;
+        uint32_t unk_F58;
+        uint32_t unk_F5C;
+        uint32_t unk_F60;
+        uint32_t unk_F64;
+        uint32_t unk_F68;
+        uint32_t unk_F6C;
+    };
+    static_assert(sizeof(RenderSceneSubGraph) == 0xF70);
 
     // REnder Graph struct REL::ID(885886)
     // RenderSceneSubGraph  (qword_1459AA8D8 + 232)
@@ -111,5 +147,99 @@ namespace RE::CreationRendererPrivate {
         uint64_t unk_8;
         RenderPassItem unk_10[64];
     };
+
+    struct alignas(0) VisualizationSetup {
+        uint8_t data[0x3C];
+    };
+    static_assert(sizeof(VisualizationSetup) == 0x3C);
+
+    struct TiledCullingData {
+        uint8_t data[6*8];
+    };
+    static_assert(sizeof(TiledCullingData) == 6*8);
+
+    struct alignas(4) CascadeShadowMapCache {
+        uint8_t data[4];
+    };
+    static_assert(sizeof(CascadeShadowMapCache) == 4);
+
+    struct ShadowMapCameraCutData {
+        uint8_t data[1024 << 4]; // unconfirmed
+    };
+
+    namespace GPUDebugGeometry {
+        struct HistoryData {
+            uint8_t data[1024 << 4]; // unconfirmed
+        };
+    };
+
+    namespace DepthSystem {
+        struct VisualizationData {
+            uint8_t data[1024 << 4]; // unconfirmed
+        };
+
+        struct HistoryData {
+            uint8_t data[88]; // unconfirmed
+        };
+        static_assert(sizeof(HistoryData) == 0x58);
+    };
+
+    namespace SkyOcclusionSystem {
+        struct SkyOcclusionData {
+            uint8_t data[1024 << 4]; // unconfirmed
+        };
+    };
+
+    namespace HeightfieldSystem {
+        struct HeightfieldData {
+            uint8_t data[550*8];
+        };
+    };
+    static_assert(sizeof(HeightfieldSystem::HeightfieldData) == 550*8);
+
+    namespace ProbeSystem {
+        struct ProbeSystemData {
+            void* data; // unconfirmed
+        };
+    };
+
+    namespace HDRSystem {
+        struct HDRConfig {
+            void* data; // unconfirmed
+        };
+    }
+    namespace SkyCubemapSystem {
+      struct SkyCubemapData {
+          void* data; // unconfirmed
+      };
+    };
+
+    namespace ApiAbstractionLayer {
+        namespace FSR3 {
+            struct ContextData {
+                uint8_t data[1024 << 4]; // unconfirmed
+            };
+        }
+
+        namespace FSR2 {
+            struct ContextData {
+                uint8_t data[1024 << 4]; // unconfirmed
+            };
+        }
+    };
+
+    namespace Intel_XeSS {
+        struct XeSSContext {
+            uint8_t data[1024 << 4]; // unconfirmed
+        };
+    }
+
+    namespace NV_Streamline {
+        namespace Utils {
+            struct ViewportData {
+                uint8_t data[1024 << 4]; // unconfirmed
+            };
+        }
+    }
 
 }

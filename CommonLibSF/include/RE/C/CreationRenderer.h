@@ -1,5 +1,5 @@
 #pragma once
-#include <d3d12.h>
+//#include <d3d12.h>
 
 namespace RE::CreationRenderer {
 	namespace Messaging {
@@ -8,6 +8,25 @@ namespace RE::CreationRenderer {
 		};
 	}
 
+    struct DirectionalShadowData {
+        void* data; // unconfirmed
+    };
+
+    struct VisualizationSetup {
+        void* data; // unconfirmed
+    };
+
+    namespace CGen {
+      struct HDRData {
+          void* data; // unconfirmed
+      };
+    };
+
+    struct alignas(0) FeatureSetup { // part of CreationRenderer namespace
+        uint8_t data[0x42];
+    };
+    static_assert(sizeof(FeatureSetup) == 0x42); // confirmed
+												  /*
     constexpr uint32_t TotalTechniqueTypeCount = 234;
 
     enum class ShaderType : uint8_t
@@ -99,4 +118,5 @@ namespace RE::CreationRenderer {
         char _pad1[0x18];								  // 50
         D3D12_CPU_DESCRIPTOR_HANDLE *m_RTVCpuDescriptors; // 68
     };
+	*/
 }
