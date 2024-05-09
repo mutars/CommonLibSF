@@ -1,5 +1,13 @@
 #include "RE/Starfield.h"
 
+namespace RE
+{
+	struct dummy
+	{
+		BSTSmallArray<CreationRendererPrivate::RenderGraphResource, 64> r;
+	};
+}
+
 int main(int argc, char *argv[])
 {
 	(void)argc;  // suppresses warning for 'argc'
@@ -22,11 +30,16 @@ int main(int argc, char *argv[])
 	(void)mrg;
 	RE::CreationRendererPrivate::RenderSceneSubGraph *rssg = nullptr;
 	(void)rssg;
-
+	RE::CreationRendererPrivate::DLSSUpscaleRenderPass *durp = nullptr;
+	(void)durp;
 	RE::CreationRendererPrivate::RenderViewSubGraph* rvsg = nullptr;
 	(void)rvsg;
     RE::BSScript::Internal::VirtualMachine* vm = nullptr;
     (void)vm;
+	RE::CreationRendererPrivate::RenderGraphData* rgd = nullptr;
+	(void)rgd;
+	RE::CreationRendererPrivate::RenderPassData* rpd = nullptr;
+	(void)rpd;
     RE::StorageTable::CameraStorageData* csd = nullptr;
     (void)csd;
 	csd->storageData.pColumnCameraCut->pHostOnlyMemory.pTableData[0];
@@ -36,6 +49,7 @@ int main(int argc, char *argv[])
 	csd->storageData.pColumnCameraTransform->pHostOnlyMemory.pTableData[0];
 	csd->storageData.pColumnCameraFrustumType->pHostOnlyMemory.pTableData[0];
 	csd->storageData.pWriterColumnData->pHostOnlyMemory->pTableData[0];
+	csd->storageData.pObserverStorageData->pCameraBlocks->pTableData[0];
 	//csd->storageData.pObserverStorageData->pHostOnlyMemory.pTableData[0];
 
 
@@ -62,12 +76,15 @@ int main(int argc, char *argv[])
 	rg->storageData.pObserverDirectStorageData->pRenderGraph->pTableData[0];
     RE::BSFixedString *bsfs = nullptr;
 	(void)bsfs;
-	RE::MultiViewAllocator *mva = nullptr;
+	RE::StorageTable::MultiViewAllocator* mva = nullptr;
 	(void)mva;
-	RE::RenderGraphBSTAllocator rgba;
+	RE::CreationRendererPrivate::RenderGraphBSTAllocator rgba;
 	(void)rgba;
     RE::StorageTable::CameraViewStorageData* cvsd = nullptr;
     (void)cvsd;
+	RE::dummy* resources = nullptr;
+	(void)resources;
+
 	// this is so dumb, without these block optimizer thow all calsses out of pdb
 	cvsd->storageData.pColumnHeightfieldSettings->pHostOnlyMemory.pTableData[0];
 	cvsd->storageData.pColumnDirectionalShadowData->pHostOnlyMemory.pTableData[0];

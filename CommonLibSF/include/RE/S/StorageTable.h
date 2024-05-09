@@ -119,10 +119,10 @@ namespace RE {
             uint64_t unk_A8;
             uint64_t unk_B0;
             uint64_t unk_B8;
-            uint64_t unk_C0;
+            uint64_t offsetRows; // C0
             AsyncColumRow *rows[64]; // 0xC8  will iterate starting from 0xC8 pointers 64 times and validate 0x68 in each pointer
             // looks like valid slot drive which indexes to use either 0x2c8/2d0/40
-            uint32_t *unk_indexes0;  // 0x2C8 pointer to allocated memory (0x200++ size) aligment 4
+            uint32_t *unk_indexes0;  // could be memory to objectId mapping
             uint32_t *unk_indexes1;  // 0x2D0 objectId*2 perhaps table for association objectid to objectId pointer to allocated memory (0x200++ size) aligment 8 0x200 points to 2D0
             uint64_t unk_2D8[29];
             HostOnlyMemory<T,V> pHostOnlyMemory; // 3C0 actual offset

@@ -23,7 +23,7 @@ namespace RE::CreationRenderer {
     };
 
     struct alignas(0) FeatureSetup { // part of CreationRenderer namespace
-        uint8_t data[0x42];
+        uint8_t data[0x42]; // possible 0x210 size
     };
     static_assert(sizeof(FeatureSetup) == 0x42); // confirmed
 												  /*

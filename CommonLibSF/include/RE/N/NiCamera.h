@@ -84,7 +84,7 @@ namespace RE
 		virtual void* UpdateTransforms(NiUpdateData* data) override;          // calls UpdateWorldData if flags & 4 != 0
 		virtual void* updateWorldBoundFromWorldTranslate();
 
-		uint32_t unk38{ 0xFFFFFF }; //130
+		uint32_t cameraID{ 0xFFFFFF }; //130
 		uint8_t pad_0133[12]; //134
 		float offsetMatrix[4][4]; // 140 diagonal 1.0f
 		float worldToCam[4][4];  // 180 last column changes when moving
@@ -97,7 +97,7 @@ namespace RE
 		uint8_t flags2; // 210
 		uint8_t pad_0211[20];
 	};
-	static_assert(offsetof(NiCamera, unk38) == 0x130);
+	static_assert(offsetof(NiCamera, cameraID) == 0x130);
 	static_assert(offsetof(NiCamera, offsetMatrix) == 0x140);
 	static_assert(offsetof(NiCamera, viewFrustum) == 0x1C0);
 	static_assert(offsetof(NiCamera, port) == 0x1E4);

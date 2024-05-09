@@ -302,7 +302,7 @@ namespace RE
 	template <class T>
 	using BSScrapArray = BSTArray<T, BSScrapArrayAllocator>;
 
-    template <std::uint32_t N>
+    template <class T, std::uint32_t N>
     class BSTSmallArrayHeapAllocator
     {
     public:
@@ -387,8 +387,8 @@ namespace RE
     private:
         union alignas(8) Data
         {
-            void* heap;
-            char  local[N]{ 0 };
+            T* heap;
+            T  local[N];
         };
 
         inline void copy(const BSTSmallArrayHeapAllocator& a_rhs)
@@ -441,16 +441,13 @@ namespace RE
         std::uint32_t _local: 1;      // 00
         Data          _data;          // 08
     };
-	static_assert(sizeof(BSTSmallArrayHeapAllocator<16>) == 8+16);
+	static_assert(sizeof(BSTSmallArrayHeapAllocator<uint64_t, 2>) == 8+16);
 
-    template <class T, std::uint32_t N>
+	template <class T, std::uint32_t N>
     class BSTSmallArray :
 		public BSTArrayBase,
-        public BSTSmallArrayHeapAllocator<N>
+        public BSTSmallArrayHeapAllocator<T, N>
     {
     };
-
-	using MultiViewAllocator = BSTArrayAllocatorFunctor<BSTSmallArrayHeapAllocator<16>>;
-	using RenderGraphBSTAllocator = BSTArrayAllocatorFunctor<BSTSmallArrayHeapAllocator<2688>>;
 
 }
