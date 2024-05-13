@@ -2,7 +2,7 @@
 
 namespace RE
 {
-	class NiRefObject
+	class alignas(16) NiRefObject
 	{
 	public:
 		SF_RTTI_VTABLE(NiRefObject);

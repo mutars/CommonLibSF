@@ -239,6 +239,13 @@ namespace RE::CreationRendererPrivate
 	static_assert(sizeof(BSTSmallArray<uint32_t, 4>) == 0x20);
 	using RenderGraphBSTAllocator = BSTArrayAllocatorFunctor<BSTSmallArrayHeapAllocator<RenderPassContainer, 8>>;
 
+	class FrameRenderGraph : public RenderGraph
+	{
+	public:
+		uint32_t id;
+		uint32_t unk_D2C;
+	};
+
 	class RenderViewSubGraph : public RenderGraph
 	{
 	public:

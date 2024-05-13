@@ -24,6 +24,9 @@ int main(int argc, char *argv[])
 	(void)am;
     RE::BSSceneNode* bsn = nullptr;
     (void)bsn;
+
+	RE::BSFixedString bsfs1();
+
 	RE::CreationRendererPrivate::TemporalAA_idTech7RenderPass* trp = nullptr;
 	(void)trp;
 	RE::CreationRendererPrivate::MainRenderGraph* mrg = nullptr;

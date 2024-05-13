@@ -12,7 +12,7 @@ namespace RE
 	public:
 		struct SceneGraphRoot
 		{
-			NiCamera* camera00; //NiPointer<NiCamera>
+			NiCamera* camera00; //NiPointer<NiCamera> renderer camera
             NiNode* pNiNodeWorld08; //08 NiNode
             NiNode* pNiNode10; //10 NiNode
             NiNode* pNiNode18; //18 NiNode
@@ -28,7 +28,7 @@ namespace RE
             std::uint64_t qword68; //68
             BSSceneNode* pBSSceneNode70; //70 BSSceneNode
 			NiNode* worldCameraRoot; //78 NiNode
-			NiCamera* worldCamera; // 80 NiCamera
+			NiCamera* worldCamera; // 80 NiCamera renderer camera
             std::uint64_t qword80; //88
             BSSceneNode* pBSceneNode90; //90 BSceneNode
             std::uint64_t qword98; //98
@@ -49,11 +49,16 @@ namespace RE
             std::uint64_t qword110; //110
             NiNode* pNiNode118; //118 NiNode
             NiNode* pNiNode120; //120 NiNode
-
-
-
+			uint8_t       pad128[512];
+			uint8_t       pad328[160];
+			uint64_t      pad3C8;
+			uint32_t      cameraViewHandleID;  //3D0
+			uint32_t      cameraViewHandleID2;  //3D4
+			uint32_t      renderHandleID;       //3D8
+			uint32_t      renderHandleID2;      //3DC
         };
 		static_assert(offsetof(SceneGraphRoot, worldCamera) == 0x80);
+		static_assert(offsetof(SceneGraphRoot, cameraViewHandleID) == 0x3D0);
 		static_assert(offsetof(SceneGraphRoot, pShadowLightNode) == 0xA0);
 		static_assert(offsetof(SceneGraphRoot, pNiNode118) == 0x118);
 

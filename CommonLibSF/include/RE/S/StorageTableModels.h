@@ -44,16 +44,17 @@ namespace RE::StorageTable
 	};
 	static_assert(sizeof(AverageLuminanceFutureReadback) == 16);
 
-	struct alignas(0) CameraViewData
+	struct alignas(4) CameraViewData
 	{
-		// byte 0x0 enabled/disabled view
-		//   unk_48_low = LOBYTE(a1->unk_48);
-		// v8 = (__int64)*(&off_7FF743BA9A50 + unk_48_low);
-		// if (!*(_DWORD*)(v8 + 4))
-		//	return unk_48_low; act as enabled/disabled also
-		uint8_t data[0x1C];  // cameraViewID is at 0x4 another source states size is 0x80*8
-		// BSTSmallArray<uint32_t, 12> cameraViews; // 0x0
+		uint32_t sceneId;
+		uint32_t cameraViewID;
+		uint8_t  unk8{ 1 };      // enabled? 0x8
+		float    fov{ 85.0 };    // 0xC
+		float    near{ 0.1 };    // 0x10
+		float    far{ 4000.0 };  // 0x14
+		uint16_t unk18{ 1 };     // 0x18
 	};  // 28 size correlates with
+	static_assert(sizeof(CameraViewData) == 0x1C);
 
 	struct ClearColor
 	{
