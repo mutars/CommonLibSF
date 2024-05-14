@@ -6,7 +6,7 @@
 #include "RE/utils.h"
 
 struct D3D12_CPU_DESCRIPTOR_HANDLE;
-class ID3D12Resource;
+struct ID3D12Resource;
 
 namespace RE::CreationRendererPrivate
 {
@@ -84,7 +84,8 @@ namespace RE::CreationRendererPrivate
 		uint64_t              field_0;
 		uint8_t               gap_8[24];
 		uint32_t              rootRenderGraphID;
-		uint8_t               gap_24[204];
+		uint32_t              sceneId;
+		uint8_t               gap_28[200];
 		uint64_t              field_F0;
 		uint32_t              field_F8;
 		uint32_t              field_FC;
@@ -251,7 +252,7 @@ namespace RE::CreationRendererPrivate
 	public:
 		~RenderViewSubGraph() override;
 
-		uint32_t subViewId;  // 0xD28
+		uint32_t sceneId;  // 0xD28
 		uint32_t unk_D2C;    // pad
 	};
 
