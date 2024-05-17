@@ -9,6 +9,7 @@ namespace RE
 	class NiNode;
 	class BSLight;
 	class NiAVObject;
+	class NiCamera;
 
 	template <class T>
 	struct BSArray
@@ -41,8 +42,7 @@ namespace RE
 	{
 		float     delta = 0;
 		float     unk04 = 0;
-		float     unk08 = 0; // NiCamera +0C
-		uint32_t  unk0C = 0;
+		NiCamera* camera = nullptr;
 		NiPoint4* unk10 = nullptr;
 		NiPoint4* unk18 = nullptr;
 		uint64_t  unk20 = 0; // memset 0,36 here looks like allockation for 36 bytes

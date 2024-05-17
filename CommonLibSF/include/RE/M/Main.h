@@ -131,8 +131,14 @@ namespace RE
 			uint32_t                     cameraViewHandleID;
 			uint32_t                     cameraViewHandleID2;
 			uint32_t                     renderHandleID;
-			uint32_t                     renderHandleID2;
-			uint8_t                      trailing[272];
+			uint32_t                     renderHandleID2; // renderer for menus
+			uint8_t                      trailing[120];
+			uint32_t                     currentRendererID;
+			uint8_t                      trailing1[124];
+			uint32_t                     currentRendererID2;
+			uint8_t                      trailing2[5];
+			uint8_t                      isInStarfieldView;
+			uint8_t                      trailing3[14];
 		};
 #pragma pack(pop)
 		static_assert(offsetof(SceneGraphRoot, worldCamera) == 0x80);

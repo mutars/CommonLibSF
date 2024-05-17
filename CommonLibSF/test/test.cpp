@@ -31,6 +31,17 @@ int main(int argc, char *argv[])
 	(void)trp;
 	RE::CreationRendererPrivate::MainRenderGraph* mrg = nullptr;
 	(void)mrg;
+	mrg->renderGraphs;
+	mrg->multiViewDataArray;
+	mrg->resources;
+
+	RE::CreationRendererPrivate::RenderPassContainer  *rpc = nullptr;
+	(void)rpc;
+	RE::CreationRendererPrivate::RenderPassItem* rpi = nullptr;
+	(void)rpi;
+	rpc->renderPassData;
+	RE::CreationRendererPrivate::RenderPassD3D12ResourceWrapper* rpd3d12rw = nullptr;
+	(void)rpd3d12rw;
 	RE::CreationRendererPrivate::RenderSceneSubGraph *rssg = nullptr;
 	(void)rssg;
 	RE::CreationRendererPrivate::DLSSUpscaleRenderPass *durp = nullptr;
@@ -43,7 +54,7 @@ int main(int argc, char *argv[])
 	(void)rgd;
 	RE::CreationRendererPrivate::RenderPassData* rpd = nullptr;
 	(void)rpd;
-    RE::StorageTable::CameraStorageData* csd = nullptr;
+    RE::StorageTable::CameraHandle* csd = nullptr;
     (void)csd;
 	csd->storageData.pColumnCameraCut->pHostOnlyMemory.pTableData[0];
 	csd->storageData.pColumnCameraScissors->pHostOnlyMemory.pTableData[0];
@@ -57,7 +68,7 @@ int main(int argc, char *argv[])
 
 
 
-    RE::StorageTable::RenderGraphStorageDataTable* rg = nullptr;
+    RE::StorageTable::RenderGraphHandle* rg = nullptr;
     (void)rg;
 	rg->storageData.pRenderGraphOptions->pHostOnlyMemory.pTableData[0];
 	rg->storageData.pImageProcess->pHostOnlyMemory.pTableData[0];
@@ -83,7 +94,7 @@ int main(int argc, char *argv[])
 	(void)mva;
 	RE::CreationRendererPrivate::RenderGraphBSTAllocator rgba;
 	(void)rgba;
-    RE::StorageTable::CameraViewStorageData* cvsd = nullptr;
+    RE::StorageTable::CameraViewHandle* cvsd = nullptr;
     (void)cvsd;
 	RE::dummy* resources = nullptr;
 	(void)resources;
