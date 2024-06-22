@@ -16,9 +16,9 @@ namespace RE::StorageTable
 
 	struct alignas(0) CameraCut
 	{
-		uint8_t data[0x60];  // 0x0
+		uint8_t data[0x40];  // 0x0
 	};
-	static_assert(sizeof(CameraCut) == 96);
+	static_assert(sizeof(CameraCut) == 64);
 
 	struct CameraScissor
 	{
@@ -83,7 +83,7 @@ namespace RE::StorageTable
 			AsyncTableColumnBase<Storage, CameraFrustum>*       pColumnCameraFrustum;      // 0x18 AsyncTableColumn Camera::Storage->StorageTable::CameraFrustum
 			AsyncTableColumnBase<Storage, CameraTransformData>* pColumnCameraTransform;    // 0x20 AsyncTableColumn Camera::Storage->StorageTable::CameraTransform
 			AsyncTableColumnBase<Storage, CameraFrustumType>*   pColumnCameraFrustumType;  // 0x28 AsyncTableColumn Camera::Storage->StorageTable::CameraFrustum
-			WriterDirectStorageData<Storage, void*>*            pWriterColumnData;         // 0x30 writeDirectColumnAta ?$WriterDirectStorageData@UStorage@Camera@StorageTable@@@Sto : StorageTable::DirectColumnDataStorageInterface
+			WriterDirectStorageData<Storage, NiCamera*>*        pWriterColumnData;         // 0x30 writeDirectColumnAta ?$WriterDirectStorageData@UStorage@Camera@StorageTable@@@Sto : StorageTable::DirectColumnDataStorageInterface
 			ObserverCameraHostOnlyTables<Storage>*              pObserverStorageData;      // 0x38 struct HostOnlyMemory<StorageTable::CameraBlocks>
 			void*                                               buffer1;                   // byte buffer
 			void*                                               buffer2;                   // byte buffer
@@ -96,6 +96,21 @@ namespace RE::StorageTable
 	{
 	public:
 		virtual ~CameraHandle() = 0;
+
+		void Register(uint32_t* idOut) {
+			using func_t = decltype(&CameraHandle::Register);
+			REL::Relocation<func_t> func{ REL::ID(94969) };
+			return func(this, idOut);
+		}
+
+		static NiCamera* GetCamera(uint32_t id) {
+			return Get()->storageData.pWriterColumnData->pHostOnlyMemory->pTableData[id & 0xFFFFFF];
+		}
+
+		static CameraHandle* Get() {
+			static REL::Relocation<CameraHandle**> singleton{ REL::ID(772608) };
+			return *singleton;
+		}
 	};
 
 	static_assert(sizeof(CameraHandle) == 0x138);

@@ -5,6 +5,7 @@ namespace RE
 	class NiNode : public NiAVObject
 	{
 	public:
+		SF_RTTI_VTABLE(NiNode);
 		virtual ~NiNode() = default;
 		virtual void* AttachChild(NiAVObject* child, bool firstAvailable);
 		virtual void* InsertChildAt(uint32_t idx, NiAVObject* child);

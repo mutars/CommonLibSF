@@ -242,15 +242,20 @@ namespace RE::ID
 		inline constexpr REL::ID SetClipspaceType{ 210416 };
 		inline constexpr REL::ID registerAsRendererCamera{ 210411 };
 		inline constexpr REL::ID SetNearFar{ 210417 };  // xmm1 = near, xmm2 = far
-		inline constexpr REL::ID SetViewport2{ 210418 };
+		inline constexpr REL::ID SetScissors{ 210418 };
 		inline constexpr REL::ID SetViewport{ 210420 };
 		inline constexpr REL::ID SetFrustumType{ 210423 };
+		inline constexpr REL::ID CalcFrustum{ 210404 };
 		inline constexpr REL::ID AdjustFov{ 210400 }; // xmm1 = delta fov
 		inline constexpr REL::ID Translate{ 210410 };  // rdx = translate -> NiPoint3 r8 = NiPoint3 unk
 		inline constexpr REL::ID Construct{ 210403 }; 
 		inline constexpr REL::ID CreateClone{ 210402 }; // thisVFunc
 		inline constexpr REL::ID CopyTo{ 210401 };  // thisVFunc
     }
+
+	namespace BSSceneNode {
+		inline constexpr REL::ID Construct{ 183173 };
+	}
 
 	namespace ObjectBindPolicy
 	{

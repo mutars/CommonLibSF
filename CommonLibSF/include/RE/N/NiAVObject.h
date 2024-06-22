@@ -10,6 +10,24 @@ namespace RE
 	class BSLight;
 	class NiAVObject;
 	class NiCamera;
+	class NiObject;
+
+	#pragma pack(push, 1)
+	struct NiCloneProcess
+	{
+		uint64_t  unk0{0};
+		uint64_t  unk8{0};
+		uint64_t  unk10{0};
+		uint64_t  unk18{0};
+		uint32_t  dword_7FF744EB3960{1};
+		uint16_t  flag{0x2400};
+		uint8_t   flag26{1};
+		uint8_t  unk27;
+		float     unk_28{1.0f};
+		float     unk_2C{1.0f};
+		float    unk_30{1.0f};
+	};
+	#pragma pack(pop)
 
 	template <class T>
 	struct BSArray
@@ -103,7 +121,7 @@ namespace RE
 		virtual void*       Unk38() { return nullptr; }
 		virtual void*       Unk39() { return nullptr; }
 		virtual void*       Unk40() { return nullptr; } // all castings end here
-		virtual void*       createClone();
+		virtual void*       createClone(NiCloneProcess* cloningProcess);
 		virtual void*       streaming1(); // some sort of streaming 2
 		virtual void*       Unk43();
 		virtual void*       Unk44();
@@ -122,6 +140,7 @@ namespace RE
 	class NiAVObject : public NiObject
 	{
 	public:
+		SF_RTTI_VTABLE(NiAVObject);
 		virtual ~NiAVObject() = default;
 		virtual void*   Update4(NiUpdateData* data); // calls update3 or 2 function (they are all point to same address)
 		virtual void*   setAsCameraRoot(void* parent); // calls *0x14598A710->tvable[1](NiAVObject)

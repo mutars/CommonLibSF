@@ -102,6 +102,39 @@ namespace RE::StorageTable
 	{
 	public:
 		virtual ~RenderGraphHandle() = 0;
+
+
+		void Register(uint32_t *idOut) {
+			using func_t = decltype(&RenderGraphHandle::Register);
+			REL::Relocation<func_t> func{ REL::ID(201716) };
+			return func(this, idOut);
+
+		}
+
+		static void ResetUpscalerHistory(uint32_t renderGraphHandleId) {
+			auto upscalerHistoryResetData = &Get()->storageData.pObserverDirectStorageData->pUpscalerHistoryResetData->pTableData[renderGraphHandleId & 0xFFFFFF];
+			if(upscalerHistoryResetData == nullptr) {
+				return;
+			}
+			upscalerHistoryResetData->resetHistory = 1;
+		}
+
+		static RenderGraphHandle* Get() {
+			static REL::Relocation<RenderGraphHandle**> singleton{ REL::ID(772639) };
+			return *singleton;
+		}
+
+		static MultiCameraViewData* GetMultiViewData(uint32_t renderGraphId) {
+			using func_t = decltype(&RenderGraphHandle::GetMultiViewData);
+			REL::Relocation<func_t> func{ REL::ID(201322) };
+			return func(renderGraphId);
+		}
+
+		static void SetMultiViewData(uint32_t renderGraphId, MultiCameraViewData* data) {
+			using func_t = decltype(&RenderGraphHandle::SetMultiViewData);
+			REL::Relocation<func_t> func{ REL::ID(201997) };
+			return func(renderGraphId, data);
+		}
 	};
 
 	static_assert(sizeof(RenderGraphHandle) == 0x158);

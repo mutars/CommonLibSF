@@ -21,9 +21,11 @@ namespace RE
 	class NiCamera : public NiAVObject
 	{
 	public:
+		SF_RTTI_VTABLE(NiCamera);
+
 		virtual ~NiCamera() = default;
 
-		virtual void* createClone() override;
+		virtual void* createClone(NiCloneProcess* cloningProcess) override;
 		//leftBoundary and rightBoundary are outputted based on the W (radius) component of worldPt.
 		//If the W component is small enough, they are essentially equal, and point to the exact
 		//XYZ location provided.
@@ -42,18 +44,25 @@ namespace RE
 			return func(this, frustum);
 		}
 
-		void SetViewport(NiRect<float> viewport)
+		void SetViewport(NiRect<float>* viewport)
 		{
 			using func_t = decltype(&NiCamera::SetViewport);
 			REL::Relocation<func_t> func{ ID::NiCamera::SetViewport };
 			return func(this, viewport);
 		}
 
-		void SetViewport2(NiRect<float> viewport)
+		void CalcFrustum(float fov, float aspectRatio, float nearDist, float farDist, char lodAdjust)
 		{
-			using func_t = decltype(&NiCamera::SetViewport2);
-			REL::Relocation<func_t> func{ ID::NiCamera::SetViewport2 };
-			return func(this, viewport);
+			using func_t = decltype(&NiCamera::CalcFrustum);
+			REL::Relocation<func_t> func{ ID::NiCamera::CalcFrustum };
+			return func(this, fov, aspectRatio, nearDist, farDist, lodAdjust);
+		}
+
+		void SetScissors(NiRect<float>* scissors)
+		{
+			using func_t = decltype(&NiCamera::SetScissors);
+			REL::Relocation<func_t> func{ ID::NiCamera::SetScissors };
+			return func(this, scissors);
 		} 
 
 		void RegisterAsRenderCamera()
@@ -156,8 +165,8 @@ namespace RE
 		uint8_t       clipSpaceType;               // 0 - perspective
 		float         minNearPlaneDist;            // 1DC
 		float         maxFarNearRatio;             // 1E0
-		NiRect<float> port;                        // 1E4
-		NiRect<float> port2;                       // 1F4
+		NiRect<float> viewPort;                    // 1E4
+		NiRect<float> scissors;                    // 1F4
 		float         m_fLODAdjust;                // 204
 		uint8_t       flags2;                      // 210
 		uint8_t       pad_0211[20];
@@ -165,7 +174,7 @@ namespace RE
 	static_assert(offsetof(NiCamera, cameraHandleID) == 0x130);
 	static_assert(offsetof(NiCamera, offsetMatrix) == 0x140);
 	static_assert(offsetof(NiCamera, viewFrustum) == 0x1C0);
-	static_assert(offsetof(NiCamera, port) == 0x1E4);
+	static_assert(offsetof(NiCamera, viewPort) == 0x1E4);
 	static_assert(sizeof(NiCamera) == 0x220);
 	static_assert(offsetof(NiCamera, worldToCam) == 384);
 }

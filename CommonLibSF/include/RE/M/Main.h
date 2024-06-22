@@ -128,8 +128,8 @@ namespace RE
 			uint64_t                     qword88;
 			MainSceneGraphStarfieldScene starfieldScene;
 			uint64_t                     pad3C8;
-			uint32_t                     cameraViewHandleID;
-			uint32_t                     cameraViewHandleID2;
+			uint32_t                     sceneViewHandleID;
+			uint32_t                     sceneViewHandleID2;
 			uint32_t                     renderHandleID;
 			uint32_t                     renderHandleID2; // renderer for menus
 			uint8_t                      trailing[120];
@@ -142,7 +142,7 @@ namespace RE
 		};
 #pragma pack(pop)
 		static_assert(offsetof(SceneGraphRoot, worldCamera) == 0x80);
-		static_assert(offsetof(SceneGraphRoot, cameraViewHandleID) == 0x3D0);
+		static_assert(offsetof(SceneGraphRoot, sceneViewHandleID) == 0x3D0);
 
 		static SceneGraphRoot* WorldRoot()
 		{

@@ -126,11 +126,12 @@ namespace RE::CreationRendererPrivate
 		virtual void unk_7(RenderGraphData*, RenderPassData*);  //nimpl
 
 		// members
-		std::string*  name;   // name 0x8->0x98 is a copy from another pass 0x0->0x90
+		char*  name;   // name 0x8->0x98 is a copy from another pass 0x0->0x90
 		uint64_t      flags;  // 0x10 flags
 		uint32_t      renderTargetLen;
 		uint32_t      unk_1C;
-		uint64_t      unk_20;             // pointer to RenderPass or RenderGraph or UpscalerPass
+		uint32_t      renderHandleId;
+		uint32_t      cameraViewHandleID;
 		uint32_t      renderTargetsSize;  // renderTargetsSize
 		uint32_t      gap2A;
 		RenderTarget* pRenderTargets;  // 0x30

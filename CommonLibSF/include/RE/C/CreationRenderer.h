@@ -2,6 +2,11 @@
 //#include <d3d12.h>
 
 namespace RE::CreationRenderer {
+
+	struct Settings {
+
+	};
+
 	namespace Messaging {
 		class MessageProcessor {
 
@@ -23,9 +28,9 @@ namespace RE::CreationRenderer {
     };
 
     struct alignas(0) FeatureSetup { // part of CreationRenderer namespace
-        uint8_t data[0x42]; // possible 0x210 size
+        uint8_t data[0x210];
     };
-    static_assert(sizeof(FeatureSetup) == 0x42); // confirmed
+    static_assert(sizeof(FeatureSetup) == 0x210); // confirmed
 												  /*
     constexpr uint32_t TotalTechniqueTypeCount = 234;
 

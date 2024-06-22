@@ -44,7 +44,7 @@ namespace RE
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
 		[[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
 
-	protected:
+	public:
 		constexpr void set_size(size_type a_size) noexcept { _size = a_size; }
 		constexpr void set_capacity(size_type a_capacity, size_t) noexcept { _capacity = a_capacity; }
 
@@ -309,19 +309,19 @@ namespace RE
         using size_type = std::uint32_t;
 
         constexpr BSTSmallArrayHeapAllocator() noexcept :
-                _capacity(0),
+			_inline_capacity(0),
                 _local(1)
         {}
 
         inline BSTSmallArrayHeapAllocator(const BSTSmallArrayHeapAllocator& a_rhs) :
-                _capacity(0),
+			_inline_capacity(0),
                 _local(1)
         {
             copy(a_rhs);
         }
 
         inline BSTSmallArrayHeapAllocator(BSTSmallArrayHeapAllocator&& a_rhs) :
-                _capacity(0),
+			_inline_capacity(0),
                 _local(1)
         {
             copy(std::move(a_rhs));
@@ -350,7 +350,7 @@ namespace RE
         [[nodiscard]] constexpr void*       data() noexcept { return local() ? _data.local : _data.heap; }
         [[nodiscard]] constexpr const void* data() const noexcept { return local() ? _data.local : _data.heap; }
 
-        [[nodiscard]] constexpr size_type capacity() const noexcept { return _capacity; }
+        [[nodiscard]] constexpr size_type capacity() const noexcept { return _inline_capacity; }
 
     protected:
         void* allocate(std::size_t a_size)
@@ -377,14 +377,14 @@ namespace RE
 
         constexpr void set_allocator_traits(void* a_data, std::uint32_t a_capacity, std::size_t a_typeSize) noexcept
         {
-            _capacity = a_capacity;
+			_inline_capacity = a_capacity;
             if (a_capacity * a_typeSize > N) {
                 _local = 0;
                 _data.heap = a_data;
             }
         }
 
-    private:
+    public:
         union alignas(8) Data
         {
             T* heap;
@@ -395,7 +395,7 @@ namespace RE
         {
             release();
 
-            _capacity = a_rhs._capacity;
+			_inline_capacity = a_rhs._inline_capacity;
             _local = a_rhs._local;
 
             if (!local()) {
@@ -414,12 +414,12 @@ namespace RE
         {
             release();
 
-            _capacity = a_rhs._capacity;
+			_inline_capacity = a_rhs._inline_capacity;
             _local = a_rhs._local;
             std::memmove(data(), a_rhs.data(), capacity());
 
             std::memset(a_rhs.data(), 0, a_rhs.capacity());
-            a_rhs._capacity = N;
+            a_rhs._inline_capacity = N;
             a_rhs._local = 1;
         }
 
@@ -432,12 +432,12 @@ namespace RE
             }
 
             std::memset(data(), 0, capacity());
-            _capacity = N;
+			_inline_capacity = N;
             _local = 1;
         }
 
         // members
-        std::uint32_t _capacity: 31;  // 00
+        std::uint32_t _inline_capacity: 31;  // 00
         std::uint32_t _local: 1;      // 00
         Data          _data;          // 08
     };

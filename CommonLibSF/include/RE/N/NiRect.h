@@ -23,7 +23,7 @@ namespace RE
 			return top > bottom ? (top - bottom) : (bottom - top);
 		}
 
-	protected:
+	public:
 		// members
 		T left;    // 00
 		T right;   // ??

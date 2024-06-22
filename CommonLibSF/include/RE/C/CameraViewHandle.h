@@ -81,7 +81,7 @@ namespace RE::StorageTable
 	public:
 		virtual ~CameraViewHandle() = 0;
 
-		void Register(uint32_t& idOut) {
+		void Register(uint32_t* idOut) {
 			using func_t = decltype(&CameraViewHandle::Register);
 			REL::Relocation<func_t> func{ REL::ID(201697) };
 			return func(this, idOut);
@@ -100,6 +100,27 @@ namespace RE::StorageTable
 			using func_t = decltype(&CameraViewHandle::writeCameraViewData);
 			REL::Relocation<func_t> func{ REL::ID(201916) };
 			return func(id, data);
+		}
+
+		static void writeFeatureSetupData(uint32_t id, CreationRenderer::FeatureSetup* data)
+		{
+			using func_t = decltype(&CameraViewHandle::writeFeatureSetupData);
+			REL::Relocation<func_t> func{ REL::ID(201919) }; // 10.36 version is missing this function
+			return func(id, data);
+		}
+
+		static void writeImageSpaceData(uint32_t id, uint32_t* data)
+		{
+			using func_t = decltype(&CameraViewHandle::writeImageSpaceData);
+			REL::Relocation<func_t> func{ REL::ID(201921) };
+			return func(id, data);
+		}
+
+		static  CreationRenderer::FeatureSetup* getFeatureSetup(uint32_t id)
+		{
+			using func_t = decltype(&CameraViewHandle::getFeatureSetup);
+			REL::Relocation<func_t> func{ REL::ID(201271) };
+			return func(id);
 		}
 	};
 	static_assert(sizeof(CameraViewHandle) == 0x150);

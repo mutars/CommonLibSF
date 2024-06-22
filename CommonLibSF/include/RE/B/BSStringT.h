@@ -95,7 +95,7 @@ namespace RE
 			release();
 
 			_size = a_rhs._size;
-			_capacity = a_rhs._capacity;
+			_capacity = a_rhs._inline_capacity;
 			_data = allocator_type::allocate(_capacity);
 
 			std::uninitialized_copy_n(a_rhs._data, _size, _data);
@@ -107,11 +107,11 @@ namespace RE
 
 			_data = a_rhs._data;
 			_size = a_rhs._size;
-			_capacity = a_rhs._capacity;
+			_capacity = a_rhs._inline_capacity;
 
 			a_rhs._data = nullptr;
 			a_rhs._size = 0;
-			a_rhs._capacity = 0;
+			a_rhs._inline_capacity = 0;
 		}
 
 		pointer   _data{};      // ??
