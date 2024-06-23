@@ -320,6 +320,7 @@ namespace RE
 		std::uint64_t                                        unk350;                   // 350
 		std::uint64_t                                        unk358;                   // 358
 		std::uint64_t                                        unk360;                   // 360
+		std::uint64_t                                        unk368;                   // 368
 		TESRace*                                             race;                     // 368
 		Perks*                                               perks;                    // 370
 		std::uint32_t                                        unk378;                   // 378
@@ -379,6 +380,7 @@ namespace RE
 		std::uint64_t                                        unk518;                   // 518
 		std::uint64_t                                        unk520;                   // 520
 		std::uint64_t                                        unk528;                   // 528
+		std::uint8_t                                         unk530[88];			   // 530
 	};
-	static_assert(sizeof(Actor) == 0x530);
+	static_assert(sizeof(Actor) == 0x570);
 }

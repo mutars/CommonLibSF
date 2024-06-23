@@ -410,9 +410,7 @@ namespace RE
 		std::uint64_t  unk10C8;          // 10C8
 		float          playerGravity;    // 10D0
 		std::uint32_t  unk10D4;          // 10D4
-		std::uint8_t  unk_trail_bytes[512];          // 10D8
-
+		std::uint64_t  unk10D8;          // 10D8
 	};
-	static_assert(sizeof(PlayerCharacter) == 0x12E0);
-	static_assert(offsetof(PlayerCharacter, currentLocation) == 0x0ED8);
+	static_assert(sizeof(PlayerCharacter) == 0x1120);
 }

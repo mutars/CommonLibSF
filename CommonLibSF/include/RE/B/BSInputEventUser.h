@@ -43,7 +43,7 @@ namespace RE
 
 		virtual ~InputEvent() = default;  //00
 		virtual bool          hasIdCode() { return false; }
-		virtual BSFixedString GetUserEventOrDisabled() {}
+		virtual BSFixedString GetUserEventOrDisabled() { return ""; }
 
 		uint32_t    deviceType;  //08
 		uint32_t    deviceId;
