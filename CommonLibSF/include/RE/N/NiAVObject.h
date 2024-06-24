@@ -126,9 +126,20 @@ namespace RE
 		virtual void*   Unk82();
 		virtual void*   Unk83();
 
-		BSFixedString name;
-		uint32_t      refcount;
+		void IncRefCount()
+		{
+			_InterlockedExchangeAdd(&refcount, 1);
+		}
+		
+		void DecRefCount()
+		{
+			if (_InterlockedExchangeAdd(&refcount, -1) == 1)
+				DeleteThis();
+		}
+
+		volatile long refcount;
 		uint32_t      pad0C;
+		BSFixedString name;
 		void*         controller;
 		void*         unk28;
 		void*         unk30;
