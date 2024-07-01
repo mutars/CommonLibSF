@@ -69,7 +69,7 @@ namespace RE
 		uint32_t  flags = 0x10;
 		uint32_t  flags2 = 1;
 		uint32_t  flags3 = 1;
-		uint32_t  unk44 = 0; // timer or counter or frame counter get's from offset 0x59AE8A0
+		uint32_t  frameCounter = 0; // timer or counter or frame counter get's from offset 0x59AE8A0
 		float     unk48 = 0; // possible delta X/Y rotation
 		uint32_t  unk4C = 0;
 		float     unk50 = 0; // unk50 is rotation matrix
@@ -185,7 +185,7 @@ namespace RE
 		NiObject*         collisionObject; // NiCollisionObject* 110
 		uint64_t      flags;   //118
 		void*         unk120;  // 120
-		void*         unk128;  // 128
+		void*             lastUpdatedFrame;  // 128
 	};
 	static_assert(sizeof(NiAVObject) == 0x130);
 	static_assert(offsetof(NiAVObject, parent) == 0x38);

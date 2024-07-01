@@ -15,8 +15,8 @@ namespace RE
 		~FirstPersonState() override;  // 00	
 
 		//members
-		std::uint64_t  N00000A22;               //0x0058
-		std::uint64_t N00000A23;               //0x0060
+		std::uint64_t  pitchFlightCameraJoy;               //0x0058
+		std::uint64_t rollFlightCameraJoy;               //0x0060
 		float     N00000A24;               //0x0068
 		std::uint32_t  _pad2;                   //0x006C
 		NiCamera* pNiCamera;               //0x0070
@@ -45,7 +45,7 @@ namespace RE
 		std::uint8_t   N00000836;               //0x00EC
 		char      pad_00ED[3];             //0x00ED
 	};
-	static_assert(offsetof(FirstPersonState, N00000A22) == 0x58);
+	static_assert(offsetof(FirstPersonState, pitchFlightCameraJoy) == 0x58);
 	static_assert(offsetof(FirstPersonState, camera_pitch) == 0xC8);
 	static_assert(offsetof(FirstPersonState, pNiCamera) == 0x70);
 	//check_size<offsetof(FirstPersonState, camera_pitch), 0xC8> trace_size11;
