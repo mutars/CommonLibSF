@@ -143,6 +143,7 @@ namespace RE
 		void*         controller;
 		void*         unk28;
 		void*         unk30;
+		void*         unk38;
 		NiNode*       parent;         //38
 		NiTransform   local;          //40
 		NiTransform   world;          //80
@@ -154,4 +155,7 @@ namespace RE
 		void*         unk128;
 	};
 	static_assert(sizeof(NiAVObject) == 0x130);
+	static_assert(offsetof(NiAVObject, NiAVObject::parent) == 0x38);
+	static_assert(offsetof(NiAVObject, NiAVObject::local) == 0x40);
+	static_assert(offsetof(NiAVObject, NiAVObject::world) == 0x80);
 }
