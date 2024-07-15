@@ -112,6 +112,9 @@ namespace RE::StorageTable
 		}
 
 		static void ResetUpscalerHistory(uint32_t renderGraphHandleId) {
+			if(renderGraphHandleId == 0xFFFFFF) {
+				return;
+			}
 			auto upscalerHistoryResetData = &Get()->storageData.pObserverDirectStorageData->pUpscalerHistoryResetData->pTableData[renderGraphHandleId & 0xFFFFFF];
 			if(upscalerHistoryResetData == nullptr) {
 				return;

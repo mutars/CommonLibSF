@@ -185,7 +185,8 @@ namespace RE
 		NiObject*         collisionObject; // NiCollisionObject* 110
 		uint64_t      flags;   //118
 		void*         unk120;  // 120
-		void*             lastUpdatedFrame;  // 128
+		uint32_t             lastUpdatedFrame;  // 128
+		uint32_t             pad12C;  // 128
 	};
 	static_assert(sizeof(NiAVObject) == 0x130);
 	static_assert(offsetof(NiAVObject, parent) == 0x38);
