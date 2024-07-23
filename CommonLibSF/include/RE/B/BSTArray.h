@@ -58,6 +58,8 @@ namespace RE
 	class BSTArrayAllocatorFunctor : public BSTArrayBase::IAllocatorFunctor
 	{
 	public:
+		using propagate_on_container_move_assignment = std::true_type;
+
 		// members
 		Allocator* _allocator;  // 00
 	};
@@ -66,6 +68,8 @@ namespace RE
 	class BSTArrayHeapAllocator
 	{
 	public:
+		using propagate_on_container_move_assignment = std::true_type;
+
 		[[nodiscard]] void* allocate(std::size_t a_size)
 		{
 			const auto mem = malloc(a_size);
@@ -151,6 +155,44 @@ namespace RE
 
 		// 4)
 		explicit BSTArray(size_type a_count) { resize(a_count); }
+
+		BSTArray(const BSTArray& a_rhs)
+		{
+			clear();
+			reserve_exact(a_rhs.size());
+			for (const auto& i : a_rhs) {
+				emplace_back(i);
+			}
+		}
+
+		BSTArray(BSTArray&& a_rhs)
+		{
+			clear();
+			reserve_exact(a_rhs.size());
+			for (const auto& i : a_rhs) {
+				emplace_back(i);
+			}
+			a_rhs.clear();
+		}
+
+		BSTArray& operator=(const BSTArray& a_rhs)
+		{
+			clear();
+			reserve_exact(a_rhs.size());
+			for (const auto& i : a_rhs) {
+				emplace_back(i);
+			}
+		}
+
+		BSTArray& operator=(BSTArray&& a_rhs)
+		{
+			clear();
+			reserve_exact(a_rhs.size());
+			for (const auto& i : a_rhs) {
+				emplace_back(i);
+			}
+			a_rhs.clear();
+		}
 
 		~BSTArray()
 		{
