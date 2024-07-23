@@ -164,6 +164,11 @@ namespace RE
 			return *singleton;
 		}
 
+		inline BSScript::IVirtualMachine* GetVM() const
+		{
+			return impl.get();
+		}
+
 		// members
 		std::uint64_t                                                                    unkB0;                          // 00B0
 		std::uint64_t                                                                    unkB8;                          // 00B8

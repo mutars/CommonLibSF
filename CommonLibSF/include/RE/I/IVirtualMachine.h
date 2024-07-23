@@ -129,6 +129,14 @@ namespace RE
 			virtual void                                     PostCachedErrorToLogger(const ICachedErrorMessage& a_errorFunctor, ErrorLogger::Severity a_severity) const = 0;                                                                                                                                                                                            // 41
 			virtual void                                     PostCachedErrorToLogger(const ICachedErrorMessage& a_errorFunctor, std::uint32_t a_stackID, ErrorLogger::Severity a_severity) const = 0;                                                                                                                                                                   // 42
 
+			template <class F>
+			void BindNativeMethod(
+				stl::zstring a_object,
+				stl::zstring a_function,
+				F a_func,
+				std::optional<bool> a_taskletCallable,
+				bool a_isLatent);
+
 			void PostError(std::string_view a_msg, std::uint32_t a_stackID, ErrorLogger::Severity a_severity)
 			{
 				class ErrorImpl :
