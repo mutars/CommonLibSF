@@ -146,7 +146,7 @@ namespace RE::BSScript
 
 			// add
 			virtual bool HasStub() const = 0;
-			virtual bool MarshallAndDispatch(Variable& a_self, Internal::VirtualMachine& a_vm, std::uint32_t a_stackID, Variable& a_resultValue, const StackFrame& a_stackFrame) = 0;
+			virtual bool MarshallAndDispatch(Variable& a_self, Internal::VirtualMachine& a_vm, std::uint32_t a_stackID, Variable& a_resultValue, const StackFrame& a_stackFrame) const = 0;
 
 		protected:
 			BSFixedString        _name;                     // 10

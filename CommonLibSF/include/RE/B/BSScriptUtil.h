@@ -7,6 +7,11 @@
 #include "RE/T/TESForm.h"
 #include "RE/G/GameVM.h"
 #include "SFSE/Logger.h"
+#include "SFSE/SFSE.h"
+#include "RE/O/ObjectTypeInfo.h"
+#include "RE/O/Object.h"
+#include "RE/S/StackFrame.h"
+#include "RE/N/NativeFunctionBase.h"
 
 namespace RE::BSScript
 {
@@ -16,10 +21,7 @@ namespace RE::BSScript
 
 		template <class T>
 		using decay_t =
-			std::conditional_t<
-				std::is_pointer_v<T>,
-				stl::remove_cvptr_t<T>,
-				std::remove_cvref_t<T>>;
+			std::decay_t<T>;
 
 		template <class T>
 		[[nodiscard]] std::optional<TypeInfo> GetTypeInfo();
@@ -914,8 +916,6 @@ namespace RE::BSScript
 					auto* const ptr = BSScript::UnpackVariable<std::remove_cvref_t<S>>(a_self);
 					assert(ptr != nullptr);
 					return *ptr;
-				} else if constexpr (detail::cobject<std::remove_cv_t<S>>) {
-					return BSScript::UnpackVariable<std::remove_cv_t<S>>(a_self);
 				} else if constexpr (detail::vmobject<std::remove_cvref_t<S>>) {
 					const auto obj = get<Object>(a_self);
 					assert(obj != nullptr);
@@ -985,10 +985,10 @@ namespace RE::BSScript
 			super(a_object, a_function, sizeof...(Args), detail::static_tag<S>, a_isLatent),
 			_stub(std::move(a_func))
 		{
-			assert(super::descTable.paramCount == sizeof...(Args));
+			assert(super::_params.paramCount == sizeof...(Args));
 			std::size_t i = 0;
-			((super::descTable.entries[i++].second = GetTypeInfo<detail::decay_t<Args>>().value_or(nullptr)), ...);
-			super::retType = GetTypeInfo<detail::decay_t<R>>().value_or(nullptr);
+			((super::_params.entries[i++].second = GetTypeInfo<detail::decay_t<Args>>().value_or(nullptr)), ...);
+			super::_retType = GetTypeInfo<detail::decay_t<R>>().value_or(nullptr);
 		}
 
 		// override (NF_util::NativeFunctionBase)

@@ -5,6 +5,7 @@
 #include "RE/B/BSLock.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/T/TypeInfo.h"
+#include "RE/E/ErrorLogger.h"
 
 namespace RE
 {
