@@ -8,11 +8,10 @@ namespace RE::BSScript
 	{
 	public:
 		NativeFunction() = delete;
-		NativeFunction(const char* a_name, const char* a_className, bool a_isStatic, std::uint32_t a_numParams)
+
+		NativeFunction(const char* a_name, const char* a_className, bool a_isStatic, std::uint32_t a_numParams) :
+			NativeFunctionBase(a_className, a_name, a_numParams, a_isStatic, false)
 		{
-			using func_t = std::add_pointer_t<NativeFunction*(NativeFunction*, const char*, const char*, bool, std::uint32_t)>;
-			REL::Relocation<func_t> func{ REL::ID(196396) };
-			func(this, a_name, a_className, a_isStatic, a_numParams);
 		}
 
 		virtual ~NativeFunction()
@@ -22,11 +21,10 @@ namespace RE::BSScript
 			func(this);
 		}
 
-		virtual bool HasCallback(void) override { return _callback != 0; }
-		virtual bool Run(VMValue* a_baseValue, VMClassRegistry* a_registry, std::uint32_t a_arg2, VMValue* a_resultValue, VMState* a_state) = 0;
+		virtual bool HasStub() const override { return _stub != nullptr; }
+		virtual bool MarshallAndDispatch(Variable& a_self, Internal::VirtualMachine& a_vm, std::uint32_t a_stackID, Variable& a_resultValue, const StackFrame& a_stackFrame) override = 0;
 
 	protected:
-		void* _callback;  // 50
+		std::function<void()> _stub;
 	};
-	static_assert(sizeof(NativeFunction) == 0x60);
 }
