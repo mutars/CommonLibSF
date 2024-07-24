@@ -21,7 +21,10 @@ namespace RE::BSScript
 
 		template <class T>
 		using decay_t =
-			std::decay_t<T>;
+			std::conditional_t<
+				std::is_pointer_v<T>,
+				std::remove_cv_t<std::remove_pointer_t<T>>,
+				std::remove_cvref_t<T>>;
 
 		template <class T>
 		[[nodiscard]] std::optional<TypeInfo> GetTypeInfo();
@@ -80,7 +83,7 @@ namespace RE::BSScript
 				const auto& mappings = _proxy->type->varNameIndexMap;
 				const auto it = mappings.find(a_name);
 				if (it != mappings.end()) {
-					const auto& var = _proxy->variables[it->second];
+					const auto& var = _proxy->variables[it->Value];
 					return detail::UnpackVariable<T>(var);
 				}
 			}
@@ -102,7 +105,7 @@ namespace RE::BSScript
 				auto& mappings = _proxy->type->varNameIndexMap;
 				const auto it = mappings.find(a_name);
 				if (it != mappings.end()) {
-					auto& var = _proxy->variables[it->second];
+					auto& var = _proxy->variables[it->Value];
 					detail::PackVariable(var, std::forward<T>(a_val));
 					return true;
 				}
@@ -227,7 +230,7 @@ namespace RE::BSScript
 		template <class T>
 		concept object =
 			std::derived_from<std::remove_cv_t<T>, TESForm> &&
-			requires { std::remove_cv_t<T>::FORM_ID; };
+			requires { std::remove_cv_t<T>::FORMTYPE; };
 		// clang-format on
 
 		template <class T>
@@ -353,7 +356,7 @@ namespace RE::BSScript
 	template <detail::object T>
 	[[nodiscard]] constexpr std::uint32_t GetVMTypeID() noexcept
 	{
-		return static_cast<std::uint32_t>(T::FORM_ID);
+		return static_cast<std::uint32_t>(T::FORMTYPE);
 	}
 
 	template <class T>
