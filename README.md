@@ -71,6 +71,11 @@ The main requirement of this license is: if you link your mod against CommonLibS
     </a>
   </td>
   <td align="center">
+    <a href="https://github.com/Deweh" title="V">
+      <img src="https://avatars.githubusercontent.com/u/76853940?v=4" width="50;" alt="V"/>
+    </a>
+  </td>
+  <td align="center">
     <a href="https://github.com/qudix" title="qudix">
       <img src="https://avatars.githubusercontent.com/u/17361645?v=4" width="50;" alt="qudix"/>
     </a>
@@ -101,13 +106,18 @@ The main requirement of this license is: if you link your mod against CommonLibS
     </a>
   </td>
   <td align="center">
-    <a href="https://github.com/FlayaN" title="FlayaN">
-      <img src="https://avatars.githubusercontent.com/u/964655?v=4" width="50;" alt="FlayaN"/>
+    <a href="https://github.com/FlayaN" title="Flayan">
+      <img src="https://avatars.githubusercontent.com/u/964655?v=4" width="50;" alt="Flayan"/>
     </a>
   </td>
   <td align="center">
     <a href="https://github.com/ianpatt" title="Ian Patterson">
       <img src="https://avatars.githubusercontent.com/u/292795?v=4" width="50;" alt="Ian Patterson"/>
+    </a>
+  </td>
+  <td align="center">
+    <a href="https://github.com/Meridiano" title="Meridiano">
+      <img src="https://avatars.githubusercontent.com/u/25160065?v=4" width="50;" alt="Meridiano"/>
     </a>
   </td>
   <td align="center">
@@ -118,11 +128,6 @@ The main requirement of this license is: if you link your mod against CommonLibS
   <td align="center">
     <a href="https://github.com/gazzamc" title="Gary McGovern">
       <img src="https://avatars.githubusercontent.com/u/7975925?v=4" width="50;" alt="Gary McGovern"/>
-    </a>
-  </td>
-  <td align="center">
-    <a href="https://github.com/Meridiano" title="Meridiano">
-      <img src="https://avatars.githubusercontent.com/u/25160065?v=4" width="50;" alt="Meridiano"/>
     </a>
   </td>
   <td align="center">
