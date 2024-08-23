@@ -26,7 +26,7 @@ namespace RE
 				return;
 			}
 			using func_t = decltype(&NiTransform::copyFrom);
-			REL::Relocation<func_t> func{ ID::NiTransform::copyFrom };
+			static REL::Relocation<func_t> func{ ID::NiTransform::copyFrom };
 			func(this, a_rhs);
 		}
 

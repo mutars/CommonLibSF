@@ -42,7 +42,7 @@ namespace RE
 	bool PlayerCamera::QCameraEquals(CameraState a_cameraState) const
 	{
 		using func_t = decltype(&PlayerCamera::QCameraEquals);
-		REL::Relocation<func_t> func{ ID::PlayerCamera::QCameraEquals };
+		static  REL::Relocation<func_t> func{ ID::PlayerCamera::QCameraEquals };
 		return func(this, a_cameraState);
 	}
 }

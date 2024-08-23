@@ -34,6 +34,7 @@ namespace RE
 			kPCTransition,
 			kTween,
 			kUnk06,
+			kVehicleCamera,
 			kFlightCamera,
 			kShipFarTravel,
 			kShipAction,
@@ -95,6 +96,7 @@ namespace RE
 		uint8_t                pad_00AC[4];                   //0x00AC
 		int32_t                N00000A53;                     //0x00B0
 		uint8_t                pad_00B4[188];                 //0x00B4
+		uint64_t 			   pad_170;                     //0x0170
 		FirstPersonState*      pFirstPersonModeState;         //0x0170
 		TESCameraState*   pVanityState;                  //0x0178
 		TESCameraState*   pVatsCameraState;              //0x0180
@@ -102,6 +104,7 @@ namespace RE
 		TESCameraState*   pPlayerCameraTransitionState;  //0x0190
 		TESCameraState*   pTweenMenuCameraState;         //0x0198
 		TESCameraState*   pThirdPersonState;             //0x01A0
+		TESCameraState*   pVehicleCameraState;            //0x01A8
 		TESCameraState*   pFlightCameraState;            //0x01A8
 		TESCameraState*   pShipFarCameraState;           //0x01B0
 		TESCameraState*   pShipActionCameraState;        //0x01B8
@@ -160,8 +163,9 @@ namespace RE
 	private:
 		bool QCameraEquals(CameraState a_cameraState) const;
 	};
-	static_assert(offsetof(PlayerCamera, pFirstPersonModeState) == 0x170);
+	static_assert(offsetof(PlayerCamera, pFirstPersonModeState) == 0x178);
 	static_assert(offsetof(PlayerCamera, N000012DD) == 0xA8);
-	static_assert(offsetof(PlayerCamera, horizontal_rotation) == 0x2A8);
-	static_assert(sizeof(PlayerCamera) == 0x2D0);
+	static_assert(offsetof(PlayerCamera, horizontal_rotation) == 0x2B8);
+	static_assert(offsetof(PlayerCamera, fov) == 0x270);
+	static_assert(sizeof(PlayerCamera) == 0x2E0);
 }

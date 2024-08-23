@@ -11,6 +11,7 @@ namespace RE
 	class NiAVObject;
 	class NiCamera;
 	class NiObject;
+	class NiExtraData;
 
 	#pragma pack(push, 1)
 	struct NiCloneProcess
@@ -176,7 +177,7 @@ namespace RE
 		void*           controller;  // 18
 		void*           unk28;       // 20
 		void*           unk30;       // 28
-		void*           unk38;       // 30 BSTArray<?> 10 elements BSTArrayAllocatorFunctor<BSTArrayHeapAllocator>::`vftable';
+		void*           unk38;       // 30 BSArray<NiExtraData*>*
 		NiNode*       parent;         //38
 		NiTransform   local;          //40
 		NiTransform   world;          //80
@@ -191,5 +192,19 @@ namespace RE
 	static_assert(sizeof(NiAVObject) == 0x130);
 	static_assert(offsetof(NiAVObject, parent) == 0x38);
 	static_assert(offsetof(NiAVObject, local) == 0x40);
+
+	class NiExtraData : public NiObject
+	{
+	public:
+		BSFixedString	m_kName;	// 10
+	};
+
+	class BSTransformExtra : public NiExtraData
+	{
+	public:
+		NiTransform m_transform;	// 20
+	};
+	static_assert(offsetof(BSTransformExtra, m_transform) == 0x20);
+	static_assert(sizeof(BSTransformExtra) == 0x60);
 
 }

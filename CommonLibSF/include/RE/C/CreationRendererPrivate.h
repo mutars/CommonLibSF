@@ -85,7 +85,7 @@ namespace RE::CreationRendererPrivate
 		uint8_t               gap_8[24];
 		uint32_t              rootRenderGraphID;
 		uint32_t              sceneId;
-		uint8_t               gap_28[200];
+		uint8_t               gap_28[200]; // 0x28 Possible huge constants structure with views projections and past projections
 		uint64_t              field_F0;
 		uint32_t              field_F8;
 		uint32_t              field_FC;
@@ -127,7 +127,7 @@ namespace RE::CreationRendererPrivate
 
 		// members
 		char*  name;   // name 0x8->0x98 is a copy from another pass 0x0->0x90
-		uint64_t      flags;  // 0x10 flags
+		uint64_t      flags;  // 0x10 flags 0x12 byte possible enabled/disabled &1 == 1 means enabled
 		uint32_t      renderTargetLen;
 		uint32_t      unk_1C;
 		uint32_t      renderHandleId;
