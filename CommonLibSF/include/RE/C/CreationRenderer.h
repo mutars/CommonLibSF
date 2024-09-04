@@ -49,7 +49,7 @@ namespace RE::CreationRenderer {
         virtual ~PipelineLayoutDx12();
 
     public:
-        void *m_LayoutConfigurationData;	  // 0x8
+        void *m_LayoutConfigurationData;	  // 0x8 function which takes RenderGraphDAta->offset... + ->itemOffset + 0x40
         char _pad0[0x68];					  // 0x10
         ID3D12RootSignature *m_RootSignature; // 0x78 Ref counted
         char _pad1[0x8];					  // 0x80

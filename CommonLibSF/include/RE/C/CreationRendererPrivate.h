@@ -7,6 +7,7 @@
 
 struct D3D12_CPU_DESCRIPTOR_HANDLE;
 struct ID3D12Resource;
+struct ID3D12GraphicsCommandList;
 
 namespace RE::CreationRendererPrivate
 {
@@ -54,23 +55,35 @@ namespace RE::CreationRendererPrivate
 	struct RenderGraphResource
 	{
 		uint8_t                         pad[184];
-		uint32_t                        index;
-		uint32_t                        padBC;
-		RenderGraphResource*            next;
+		uint32_t                        resourceSize;
+		uint32_t                        unkBC;
+		uint32_t            			renderGraphIndex;
+		uint32_t            			unkC4;
 		RenderPassD3D12ResourceWrapper* pResourceWrapper;
 		uint8_t                         padD0[8];
 	};
 #pragma pack(pop)
+	static_assert(offsetof(RenderGraphResource, renderGraphIndex) == 0xC0);
+	static_assert(offsetof(RenderGraphResource, pResourceWrapper) == 0xC8);
+	static_assert(sizeof(RenderGraphResource) == 0xD8);
 
 	struct RenderPassItem
 	{
 		uint32_t resourceSize;
 		uint32_t unk_4;
-		uint64_t renderGraphIndex;
-		uint64_t stateOrFlags;
+		uint32_t renderGraphIndex;
+		uint32_t unk_C;
+		uint32_t stateOrFlags; //confirmed transition state
+		uint32_t unk14;
 		uint64_t unk_18;
+		inline uint32_t getDXGIState() {
+			using func_t = int (*)(int);
+			static REL::Relocation<func_t> getDXGIState_original{ REL::ID(1079146) };
+			return getDXGIState_original(stateOrFlags);
+		}
 	};
 	static_assert(sizeof(RenderPassItem) == 0x20);
+	static_assert(offsetof(RenderPassItem, renderGraphIndex) == 0x08);
 
 	struct RenderGraphContext
 	{
@@ -90,13 +103,20 @@ namespace RE::CreationRendererPrivate
 		uint32_t              field_F8;
 		uint32_t              field_FC;
 		uint64_t              field_100;
-		uint64_t              field_108;
+		uint64_t*             commonlyUsedStruct[1]; // [viewportId]
 		uint8_t               gap_110[24];
 		uint64_t              field_128;
 		uint64_t              field_130;  // number of items in some unk structure
 		RenderGraphDataInner* pRenderGraphDataInner;
-		RenderGraphContext*   pRenderGraphContext;  // 0x140
+		uint32_t              viewportId;  // 0x140
+		uint32_t              unk144;  // 0x144
 		uint64_t              field_148;
+		[[nodiscard]] inline uintptr_t getCommandList() const
+		{
+			using func_t = uintptr_t(*)(const RenderGraphData*);
+			static REL::Relocation<func_t> getCommandListFunc{ REL::ID(206429) };
+			return getCommandListFunc(this);
+		}
 	};
 #pragma pack(pop)
 
@@ -106,6 +126,49 @@ namespace RE::CreationRendererPrivate
 		BSTSmallArray<RenderGraphResource, 64>* renderGraphResources;
 		RenderGraph*                            pRenderGraph;
 		uint16_t                                unk_18;
+		[[nodiscard]] inline RenderPassItem* getRenderPassItemByIndex(uint32_t index) const
+		{
+			if(renderPassItems == nullptr || index >= renderPassItems->_size) {
+				return nullptr;
+			}
+			auto renderPassItemsHeap = renderPassItems->_data.heap;
+			if(renderPassItems->_local) {
+				renderPassItemsHeap = renderPassItems->_data.local;
+			}
+			return &renderPassItemsHeap[index];
+		}
+
+		[[nodiscard]] inline ID3D12Resource* getNativeResourceByIndex(uint32_t index) const
+		{
+			auto resource = getResourceByIndex(index);
+			if(resource == nullptr || resource->pResourceWrapper == nullptr || resource->pResourceWrapper->pResourceContext == nullptr) {
+				return nullptr;
+			}
+			return resource->pResourceWrapper->pResourceContext->pResource;
+		}
+
+		[[nodiscard]] inline RenderGraphResource* getResourceByIndex(uint32_t index) const
+		{
+			if(renderPassItems == nullptr || renderGraphResources == nullptr) {
+				return nullptr;
+			}
+			RE::CreationRendererPrivate::RenderGraphResource* resource = nullptr;
+			auto renderPassItem = getRenderPassItemByIndex(index);
+			if(renderPassItem == nullptr) {
+				return nullptr;
+			}
+			auto heap = renderGraphResources->_data.heap;
+			auto last = &heap[renderGraphResources->_inline_capacity];
+			if(renderGraphResources->_inline_capacity) {
+				for(auto item = heap; item != last; item++) {
+					if(item->renderGraphIndex == renderPassItem->renderGraphIndex && item->resourceSize == renderPassItem->resourceSize) {
+						resource = item;
+						break;
+					}
+				}
+			}
+			return resource;
+		}
 	};
 
 	class alignas(0) RenderPass

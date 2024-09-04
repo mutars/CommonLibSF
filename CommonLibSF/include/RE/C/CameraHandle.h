@@ -60,13 +60,25 @@ namespace RE::StorageTable
 		float bottom;
 	};
 	static_assert(sizeof(CameraViewport) == 0x10);
-
-	struct CameraBlocks
+	struct CameraBlocksData
 	{
-		void* func1;
-		void* func2;
+		char data[0x2B0*3];
+		/**
+		 * 0x8 -> 0x66 4 bytes unknown also possible current->past something
+		 * 0x50 -> 0x150 8floats current->past something
+		 * 0x70 -> 0x170 8floats current->past something
+		 *
+		 *
+		 */
 	};
-	static_assert(sizeof(CameraBlocks) == 0x10);
+	static_assert(sizeof(CameraBlocksData) == 0x2B0*3); // either 160 size or 0x2B0*3
+
+	struct CameraBlocks {
+		CameraBlocksData* data;
+		uint32_t unk;
+		uint32_t unk2;
+	};
+
 
 	namespace Camera
 	{

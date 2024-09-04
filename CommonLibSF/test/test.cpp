@@ -106,6 +106,8 @@ int main(int argc, char *argv[])
 	cvsd->storageData.pColumnHighlightSettings->pHostOnlyMemory.pTableData[0];
 	cvsd->storageData.pColumnFeatureSetup->pHostOnlyMemory.pTableData[0];
 	cvsd->storageData.pColumnImageSpaceData->pHostOnlyMemory.pTableData[0];
+	cvsd->storageData.pColumnCameraViewData->pHostOnlyMemory.pTableData[0];
+	cvsd->storageData.pWriterColumnData->pHostOnlyMemory->pTableData[0];
 	cvsd->storageData.pColumnClearColor->pHostOnlyMemory.pTableData[0];
 	cvsd->storageData.pObserverStorageData->pSkyCubeMapData->pTableData[0];
 	cvsd->storageData.pObserverStorageData->pShadowMapCameraCutData->pTableData[0];

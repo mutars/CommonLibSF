@@ -24,8 +24,8 @@ namespace RE::StorageTable
 		uint32_t cameraViewID;
 		uint8_t  unk8{ 1 };      // enabled? 0x8
 		float    fov{ 85.0 };    // 0xC default is 54.01 maybe it is not fov
-		float    near{ 0.1 };    // 0x10
-		float    far{ 4000.0 };  // 0x14
+		float    cameraNear{ 0.1 };    // 0x10
+		float    cameraFar{ 4000.0 };  // 0x14
 		uint16_t unk18{ 1 };     // 0x18
 	};                           // 28 size correlates with
 	static_assert(sizeof(CameraViewData) == 0x1C);
