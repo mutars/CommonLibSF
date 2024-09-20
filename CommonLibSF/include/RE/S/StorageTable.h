@@ -201,6 +201,7 @@ namespace RE {
 
         template <typename T, typename V>
         class ObserverDirectStorageData : public DirectColumnDataStorageInterface {
+		public:
             HostOnlyMemory<T, V> *pHostOnlyMemory; // 0x8
         };;
     }

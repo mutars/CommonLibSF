@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CameraHandle.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/C/CreationRendererContext.h"
@@ -76,10 +77,13 @@ namespace RE::CreationRendererPrivate
 		uint32_t stateOrFlags; //confirmed transition state
 		uint32_t unk14;
 		uint64_t unk_18;
-		inline uint32_t getDXGIState() {
+		[[nodiscard]] inline uint32_t getDXGIState() const {
+			return getDXGIState(stateOrFlags);
+		}
+		inline static uint32_t getDXGIState(uint32_t state) {
 			using func_t = int (*)(int);
 			static REL::Relocation<func_t> getDXGIState_original{ REL::ID(1079146) };
-			return getDXGIState_original(stateOrFlags);
+			return getDXGIState_original(state);
 		}
 	};
 	static_assert(sizeof(RenderPassItem) == 0x20);
@@ -89,6 +93,58 @@ namespace RE::CreationRendererPrivate
 	{
 		uint32_t viewPortId;  // 0x20
 	};
+
+	// scrapheap allocator?
+	struct RenderGraphDataHeapAllocator
+	{
+		uintptr_t unk0;
+		void *struct3;
+	};
+
+	struct RenderPassD3D12ResourceWrapper2
+	{
+		RE::CreationRendererPrivate::RenderPassD3D12ResourceWrapper *resource;
+		__int32 unk8;
+		__int32 unkC;
+	};
+
+
+	struct RenderGraphDataResourceArray
+	{
+		RenderPassD3D12ResourceWrapper2 nodeArray[2];
+		uint32_t frameNumber;
+		uint32_t unk24;
+		char flag28;
+		char flag29;
+		char flag2A;
+	};
+
+
+	struct RenderGraphDataResourcesList
+	{
+		RenderGraphDataResourceArray *resources[12];
+		char cameraCut;
+	};
+
+	struct RenderGraphDataBase0x30 {
+		uint8_t unk0[0xF8];
+		float jitterOffset[2];
+		uint8_t unk100[0x80];
+	};
+
+#pragma pack(push, 1)
+	struct RenderGraphDataBase
+	{
+		RE::StorageTable::CameraViewport cameraViewport;
+		RE::StorageTable::CameraScissor cameraScissors;
+		unsigned int rootRenderGraphID;
+		unsigned int sceneId; // or CameraHandleId
+		RenderGraphDataHeapAllocator *allocator;
+		RenderGraphDataBase0x30 *unk30_0x180size;
+		uint8_t unk38[8];
+		RenderGraphDataResourcesList *resources40;
+	};
+#pragma pack(pop)
 
 #pragma pack(push, 1)
 	struct RenderGraphData
@@ -103,12 +159,12 @@ namespace RE::CreationRendererPrivate
 		uint32_t              field_F8;
 		uint32_t              field_FC;
 		uint64_t              field_100;
-		uint64_t*             commonlyUsedStruct[1]; // [viewportId]
+		RenderGraphDataBase*  renderGraphResources[1]; // [viewportId]
 		uint8_t               gap_110[24];
 		uint64_t              field_128;
 		uint64_t              field_130;  // number of items in some unk structure
 		RenderGraphDataInner* pRenderGraphDataInner;
-		uint32_t              viewportId;  // 0x140
+		uint32_t              viewportId;  // 0x140 increments during render pass and decrements when pass is done, most likely to support async frame rendering
 		uint32_t              unk144;  // 0x144
 		uint64_t              field_148;
 		[[nodiscard]] inline uintptr_t getCommandList() const
@@ -116,6 +172,51 @@ namespace RE::CreationRendererPrivate
 			using func_t = uintptr_t(*)(const RenderGraphData*);
 			static REL::Relocation<func_t> getCommandListFunc{ REL::ID(206429) };
 			return getCommandListFunc(this);
+		}
+
+		inline RenderGraphDataBase* getRenderGraphDataBase()
+		{
+			return renderGraphResources[viewportId];
+		}
+
+		inline bool resetHistory()
+		{
+			auto resources = renderGraphResources[viewportId];
+			if(resources == nullptr) {
+				return false;
+			}
+			auto resources40 = resources->resources40;
+			if(resources40 == nullptr) {
+				return false;
+			}
+			return resources40->cameraCut;
+		}
+
+		[[nodiscard]] inline ID3D12Resource* getResourceByIndex(uint32_t index, int frameCount)
+		{
+			auto resources = renderGraphResources[viewportId];
+			if(resources == nullptr) {
+				return nullptr;
+			}
+			auto resources40 = resources->resources40;
+			if(resources40 == nullptr) {
+				return nullptr;
+			}
+			auto resourceArray = resources40->resources[index];
+			if(resourceArray == nullptr) {
+				return nullptr;
+			}
+			auto& wrapper2 = resourceArray->nodeArray[frameCount & 1];
+			auto resourceWrapper = wrapper2.resource;
+			auto state = RenderPassItem::getDXGIState(wrapper2.unk8);
+			if(resourceWrapper == nullptr || state != 8) {
+				return nullptr;
+			}
+			auto context = resourceWrapper->pResourceContext;
+			if(context == nullptr) {
+				return nullptr;
+			}
+			return context->pResource;
 		}
 	};
 #pragma pack(pop)
@@ -136,6 +237,14 @@ namespace RE::CreationRendererPrivate
 				renderPassItemsHeap = renderPassItems->_data.local;
 			}
 			return &renderPassItemsHeap[index];
+		}
+
+		[[nodiscard]] inline RenderPassD3D12ResourceWrapper* getResourceWrapperByIndexInternal(uint32_t index) const
+		{
+			using func_t = RenderPassD3D12ResourceWrapper*(*)(const RenderPassData*, int32_t index);
+
+			static REL::Relocation<func_t> getResourceWrapperByIndexInternal_fn{ REL::ID(206433) };
+			return getResourceWrapperByIndexInternal_fn(this, index);
 		}
 
 		[[nodiscard]] inline ID3D12Resource* getNativeResourceByIndex(uint32_t index) const
@@ -290,6 +399,7 @@ namespace RE::CreationRendererPrivate
 		BSTArray<RenderGraphUnk>*               renderGraphUnkArray;
 		BSTSmallArray<RenderPassContainer, 8>   renderGraphs;            // 228h element size  0x150u 8 elementsx0x150 size
 		uint8_t                                 unk_CB8[0xD20 - 0xCB8];  // 0xCC0
+																		 // a1->unk_CB8[96] RE::CreationRendererPrivate::RenderGraphData
 																		 // 0x0CE0 renderGraphsSize
 		uint32_t renderGraphID;                                          // 0xD20
 		uint32_t unk_D24;                                                // some byteflag at 0xD26

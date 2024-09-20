@@ -8,9 +8,13 @@ namespace RE::StorageTable
 {
 	struct alignas(0) RenderGraphOptions
 	{
-		uint8_t data[0x30];
+		uint8_t data[0x20];
+		uint32_t flags;
+		uint32_t pad24;
+		uint8_t trailing[8];
 	};
 	static_assert(sizeof(RenderGraphOptions) == 48);
+	static_assert(offsetof(RenderGraphOptions, flags) == 0x20);
 
 	struct alignas(0) RenderGraphStorageData
 	{
@@ -121,6 +125,21 @@ namespace RE::StorageTable
 			}
 			upscalerHistoryResetData->resetHistory = 1;
 		}
+		
+		inline static bool getResetHistory(uint32_t renderGraphHandleId) {
+			RenderGraphHandle* pHandle = Get();
+			if (pHandle == nullptr) {
+				return false;
+			}
+			auto renderGraphOptionsIndex = pHandle->storageData.pRenderGraphOptions->indexes[renderGraphHandleId & 0xFFFFFF];
+			auto& renderGraphOptions = pHandle->storageData.pRenderGraphOptions->pHostOnlyMemory.pTableData[renderGraphOptionsIndex];
+			// probalby if upscaler is enabled
+			if((renderGraphOptions.flags & 0x3C) == renderGraphOptions.flags) {
+				auto& upscalerHistoryResetData = pHandle->storageData.pObserverDirectStorageData->pUpscalerHistoryResetData->pTableData[renderGraphHandleId & 0xFFFFFF];
+				return upscalerHistoryResetData.resetHistory;
+			}
+			return false;
+		} 
 
 		static RenderGraphHandle* Get() {
 			static REL::Relocation<RenderGraphHandle**> singleton{ REL::ID(772639) };

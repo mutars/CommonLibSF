@@ -62,7 +62,7 @@ namespace RE::StorageTable
 	static_assert(sizeof(CameraViewport) == 0x10);
 	struct CameraBlocksData
 	{
-		char data[0x2B0*3];
+		char data[0x2B0]; // 3x CameraBlocks
 		/**
 		 * 0x8 -> 0x66 4 bytes unknown also possible current->past something
 		 * 0x50 -> 0x150 8floats current->past something
@@ -70,12 +70,45 @@ namespace RE::StorageTable
 		 *
 		 *
 		 */
+		/* @see RE::RenderPassConstantBufferView
+		Vector2f unk0;
+		int unk8;
+		char pad_000C[68];
+		Matrix4x4f unk50;
+		char pad_0090[64];
+		Matrix4x4f unk0D0;
+		Vector4f unk110;
+		Vector4f unk120;
+		Vector4f unk130;
+		char pad_0140[16];
+		Matrix4x4f unk150;
+		Vector2f unk190;
+		int unk198;
+		char pad_019C[4];
+		Vector4f unk1A0;
+		Vector4f unk1B0;
+		Vector4f unk1C0;
+		Vector4f unk1D0;
+		Matrix4x4f unk1E0;
+		char pad220[64];
+		float frustumL;
+		float frumstumR;
+		float frtustumT;
+		float frustumB;
+		float cameraNear;
+		float cameraFar;
+		char trail[56];
+		 */
 	};
-	static_assert(sizeof(CameraBlocksData) == 0x2B0*3); // either 160 size or 0x2B0*3
+	static_assert(sizeof(CameraBlocksData) == 0x2B0); // either 160 size or 0x2B0*3
 
+	struct CameraBlocksDataArr
+	{
+		CameraBlocksData cameraBlocks[3]; // 3x CameraBlocks
+	};
 	struct CameraBlocks {
-		CameraBlocksData* data;
-		uint32_t unk;
+		CameraBlocksDataArr* data; //most likely unique_ptr
+		uint32_t lastRenderedFrame;
 		uint32_t unk2;
 	};
 
@@ -83,9 +116,9 @@ namespace RE::StorageTable
 	namespace Camera
 	{
 		template <typename ST>
-		struct ObserverCameraHostOnlyTables : public DirectColumnDataStorageInterface
+		struct ObserverCameraHostOnlyTables
 		{
-			HostOnlyMemory<ST, StorageTable::CameraBlocks>* pCameraBlocks;
+			ObserverDirectStorageData<ST, StorageTable::CameraBlocks> pCameraBlocks;
 		};
 		struct alignas(8) Storage
 		{
