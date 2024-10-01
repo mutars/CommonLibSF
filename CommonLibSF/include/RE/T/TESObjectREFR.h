@@ -402,4 +402,5 @@ namespace RE
 		void AddLockChange();
 	};
 	static_assert(sizeof(TESObjectREFR) == 0xD0);
+	static_assert(offsetof(TESObjectREFR, data) == 0x78);
 }
