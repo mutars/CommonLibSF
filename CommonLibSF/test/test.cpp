@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	csd->storageData.pColumnCameraTransform->pHostOnlyMemory.pTableData[0];
 	csd->storageData.pColumnCameraFrustumType->pHostOnlyMemory.pTableData[0];
 	csd->storageData.pWriterColumnData->pHostOnlyMemory->pTableData[0];
-	csd->storageData.pObserverStorageData->pCameraBlocks->pTableData[0];
+    csd->storageData.pObserverStorageData->pCameraBlocks.pHostOnlyMemory->pTableData[0];
 	//csd->storageData.pObserverStorageData->pHostOnlyMemory.pTableData[0];
 
 

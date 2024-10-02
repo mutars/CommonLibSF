@@ -413,4 +413,5 @@ namespace RE
 		std::uint64_t  unk10D8;          // 10D8
 	};
 	static_assert(sizeof(PlayerCharacter) == 0x1120);
+	static_assert(offsetof(PlayerCharacter, data) == 0x78);
 }
