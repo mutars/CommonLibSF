@@ -346,7 +346,7 @@ namespace RE
 		std::uint64_t  unk0EC8;          // 0EC8
 		std::uint64_t  unk0ED0;          // 0ED0
 		BGSLocation*   currentLocation;  // 0ED8
-		std::uint64_t  unk0EE0;          // 0EE0
+		NiNode*  activeCrossHairTarget;          // 0EE0
 		std::uint64_t  unk0EE8;          // 0EE8
 		std::uint64_t  unk0EF0;          // 0EF0
 		std::uint64_t  unk0EF8;          // 0EF8
