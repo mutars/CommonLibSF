@@ -140,6 +140,13 @@ namespace RE::ID
 		inline constexpr REL::ID Assign{ 34124 }; // BfixedString operator =
 
 	}
+
+	namespace BSStorage
+	{
+		inline constexpr REL::ID FlushStreamBuffer{ 72433 };
+		inline constexpr REL::ID PrepareStreamBuffer{ 72461 };
+		inline constexpr REL::ID WriteString{ 87863 };
+	}
 	namespace BSSystemFile
 	{
 		inline constexpr REL::ID ctor{ 198445 };
@@ -182,6 +189,26 @@ namespace RE::ID
 		inline constexpr REL::ID HasType{ 83208 };
 	}
 
+	namespace GameScript
+	{
+		namespace RemoteDebugger
+		{
+			inline constexpr REL::ID HandleContinueRequest{ 167579 };
+			inline constexpr REL::ID HandleDisconnectRequest{ 167580 };
+			inline constexpr REL::ID HandlePauseRequest{ 167581 };
+			inline constexpr REL::ID HandleSetBreakpointsRequest{ 167582 };
+			inline constexpr REL::ID HandleStackTraceRequest{ 167583 };
+			inline constexpr REL::ID HandleThreadsRequest{ 167584 };
+			inline constexpr REL::ID HandleValueRequest{ 167585 };
+			inline constexpr REL::ID HandleVariablesRequest{ 167586 };
+			inline constexpr REL::ID HandleStepRequest{ 167587 };
+		}
+	}
+	namespace GameVM
+	{
+		inline constexpr REL::ID singleton{ 878371 };
+	}
+
 	namespace idLogging
 	{
 		inline constexpr REL::ID singleton{ 895197 };
@@ -214,9 +241,16 @@ namespace RE::ID
 
 	namespace MemoryManager
 	{
+
+		namespace AutoScrapBuffer
+		{
+			inline constexpr REL::ID ctor{ 178513 };
+			inline constexpr REL::ID dtor{ 178516 };
+		}
 		inline constexpr REL::ID GetSingleton{ 33961 };
 		inline constexpr REL::ID Allocate{ 33962 };
 		inline constexpr REL::ID Free{ 34032 };
+		inline constexpr REL::ID GetThreadScrapHeap{ 36848 };
 	}
 
 	namespace Misc
@@ -315,6 +349,12 @@ namespace RE::ID
 		}
 	}
 
+	namespace ScrapHeap
+	{
+		inline constexpr REL::ID Allocate{ 34432 };
+		inline constexpr REL::ID Deallocate{ 37624 };
+	}
+
 	namespace Script
 	{
 		inline constexpr REL::ID GetConsoleCommands{ 841465 };
@@ -394,7 +434,7 @@ namespace RE::ID
 	namespace UI
 	{
 		inline constexpr REL::ID singleton{ 878339 };
-		inline constexpr REL::ID IsMenuOpen{ 187049 };
+		inline constexpr REL::ID IsMenuOpen{ 1870208 };
 	}
 
 	// global functions/ ids

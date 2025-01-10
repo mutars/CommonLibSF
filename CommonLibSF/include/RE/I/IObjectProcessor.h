@@ -1,19 +1,26 @@
 #pragma once
+#include "RE/B/BSFixedString.h"
+#include "RE/I/ILoader.h"
 
-namespace RE::BSScript
+namespace RE
 {
-	class IObjectProcessor
+	namespace BSScript
 	{
-	public:
-		SF_RTTI_VTABLE(BSScript__IObjectProcessor);
+		struct ILoader;
 
-		virtual ~IObjectProcessor() = default;  // 00
+		class __declspec(novtable) IObjectProcessor
+		{
+		public:
+			static constexpr auto RTTI{ RTTI::BSScript__IObjectProcessor };
+			static constexpr auto VTABLE{ VTABLE::BSScript__IObjectProcessor };
 
-		// add
-		virtual void clone() = 0;  // 01
-        virtual void unk_02() = 0;  // 02
-        virtual void unk_03() = 0;  // 03
+			virtual ~IObjectProcessor();  // 00
 
-	};
-	static_assert(sizeof(IObjectProcessor) == 0x8);
+			// add
+			virtual IObjectProcessor* Clone() = 0;                                    // 01
+			virtual void              SetLoader(ILoader* a_loader) = 0;               // 02
+			virtual bool              Process(const BSFixedString& a_className) = 0;  // 03
+		};
+		static_assert(sizeof(IObjectProcessor) == 0x8);
+	}
 }

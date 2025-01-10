@@ -1,46 +1,47 @@
 #pragma once
-#include "RE/I/IObjectProcessor.h"
+
 #include "RE/B/BSFixedString.h"
+#include "RE/B/BSTArray.h"
+#include "RE/B/BSTSmartPointer.h"
+#include "RE/I/IObjectProcessor.h"
 
-namespace RE::BSScript
+namespace RE
 {
-    namespace Internal
-    {
-        class VirtualMachine;
-    }
+	namespace BSScript
+	{
+		class ErrorLogger;
 
-    class LinkerProcessor: public IObjectProcessor
-    {
-    public:
-        SF_RTTI_VTABLE(BSScript__LinkerProcessor);
+		namespace Internal
+		{
+			class VirtualMachine;
+		}
 
-        virtual ~LinkerProcessor() = default;  // 00
+		class __declspec(novtable) LinkerProcessor :
+			public IObjectProcessor
+		{
+		public:
+			static constexpr auto RTTI{ RTTI::BSScript__LinkerProcessor };
+			static constexpr auto VTABLE{ VTABLE::BSScript__LinkerProcessor };
 
-        // add
-        virtual void clone() = 0;  // 01
-        virtual void unk_02() = 0;  // 02
-        virtual void unk_03() = 0;  // 03
+			virtual ~LinkerProcessor();  // 00
 
+			// override (IObjectProcessor)
+			virtual IObjectProcessor* Clone() override;                                    // 01
+			virtual void              SetLoader(ILoader* a_loader) override;               // 02 - { loader = a_loader; }
+			virtual bool              Process(const BSFixedString& a_className) override;  // 03
 
-        Internal::VirtualMachine* pVirtualMachine;  // 08
-        void* pLogger;  // 10 GameScript::Logger
-        void* pCompiledScriptLoader;  // 18 BSScript::CompiledScriptLoader : BSScript::ILoader
-        void* unk_20;  // 20
-        void* unk_28;  // 28
-        float unk_30;  // 30
-        float unk_34;  // 38
-        void* unk_38;  // 38
-        void* unk_40;  // 40
-        float unk_48;  // 48
-        float unk_4C;  // 4C
-        void* unk_50;  // 50
-        void* unk_58;  // 58
-        float unk_60;  // 60
-        float unk_64;  // 64
-        void* unk_68;  // 68
-        void* unk_70;  // 70
-        void* unk_78;  // 78 // some kind of list with NestedValues UI values
-        void* unk_80;  // 80 // array or mack with UI values
-    };
-    static_assert(sizeof(LinkerProcessor) == 0x88);
+			// members
+			Internal::VirtualMachine*                                             virtualMachine;      // 08
+			ErrorLogger*                                                          errorLogger;         // 10
+			ILoader*                                                              loader;              // 18
+			std::uint64_t                                                         unk20;               // 20
+			char*                                                                 unk28;               // 28
+			BSScrapArray<BSFixedString>                                           loadedParents;       // 30
+			BSScrapArray<BSFixedString>                                           objectsToTypecheck;  // 48
+			BSScrapArray<BSFixedString>                                           processQueue;        // 60
+			/*BSTHashMap<BSFixedString, BSTSmartPointer<ObjectTypeInfo>>**/ void* objectTypeInfoMap;   // 78
+			/*BSTHashMap<BSFixedString, BSTSmartPointer<StructTypeInfo>>**/ void* structTypeInfoMap;   // 80
+		};
+		static_assert(sizeof(LinkerProcessor) == 0x88);
+	}
 }

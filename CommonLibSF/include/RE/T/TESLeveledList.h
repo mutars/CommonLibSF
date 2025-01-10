@@ -19,13 +19,15 @@ namespace RE
 	struct LEVELED_OBJECT
 	{
 	public:
+		SF_HEAP_REDEFINE_NEW(LEVELED_OBJECT);
+
 		// members
 		TESForm*            form;        // 00
 		ContainerItemExtra* itemExtra;   // 08
 		TESCondition*       conditions;  // 10
 		std::uint16_t       count;       // 18
 		std::uint16_t       level;       // 1A
-		std::uint8_t        unk1C;       // 1C
+		std::uint8_t        chanceNone;  // 1C
 		std::uint8_t        unk1D;       // 1D
 	};
 	static_assert(sizeof(LEVELED_OBJECT) == 0x20);
@@ -69,7 +71,7 @@ namespace RE
 		std::uint32_t                                                                  unk4C;             // 4C
 		stl::enumeration<Flag, std::uint8_t>                                           flags;             // 50
 		std::uint8_t                                                                   unk51;             // 51
-		std::int8_t                                                                    baseListCount;     // 52
+		std::uint8_t                                                                   baseListCount;     // 52
 		std::uint8_t                                                                   unk53;             // 53
 		std::uint8_t                                                                   unk54;             // 54
 		BSFixedString                                                                  overrideName;      // 58

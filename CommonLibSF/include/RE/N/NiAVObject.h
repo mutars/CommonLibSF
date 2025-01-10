@@ -132,7 +132,7 @@ namespace RE
 		virtual void*       Unk48();
 		virtual void*       Unk49();
 		virtual void*       getRTTIDelegate();  // calls GetRTTI internally
-		virtual void*       Unk51(); 
+		virtual void*       Unk51();
 		virtual void*       Unk52();
 		virtual void*       Unk53();
 		virtual void*       Unk54();
@@ -149,7 +149,7 @@ namespace RE
 		virtual void*   Unk58();
 		virtual void*   Unk59();
 		virtual void*   Unk60();
-		virtual void*   SetSelectiveFlagsAndPropagadeToParent(bool set); // flags | 1 and much more  
+		virtual void*   SetSelectiveFlagsAndPropagadeToParent(bool set); // flags | 1 and much more
 		virtual NiNode* GetObjectByName(const BSFixedString& name);
 		virtual void*   SetSelectiveUpdateFlags(); // +execute something on each controller->*0x1D8
 		virtual void*   update0x800FlagsAndResetWorldBoundRadius(bool set);         // v2 | 0x800; if set is true and worldBound.radius = 1.0 if it's negative
