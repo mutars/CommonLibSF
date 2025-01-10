@@ -157,7 +157,7 @@ namespace RE
 
 		[[nodiscard]] auto GetUInt(const bool a_default = false) const noexcept
 		{
-			assert(GetType() == Type::kUInt);
+			assert(GetType() == Type::kUInt  || GetType() == Type::kRGB || GetType() == Type::kRGBA);
 			return a_default ? _defaultValue.u : _value.u;
 		}
 
@@ -221,7 +221,7 @@ namespace RE
 
 		void SetUInt(const std::uint32_t a_value) noexcept
 		{
-			assert(GetType() == Type::kUInt);
+			assert(GetType() == Type::kUInt || GetType() == Type::kRGB || GetType() == Type::kRGBA);
 			_value.u = a_value;
 		}
 
@@ -314,6 +314,69 @@ namespace RE
 		{
 			SetString(a_value);
 			return *this;
+		}
+
+		inline std::string to_string() const
+		{
+			return FormatSettingValue(this);
+		}
+
+		inline static std::string FormatSettingValue(const Setting* setting)
+		{
+			switch (setting->GetType())
+			{
+			case Setting::Type::kBool:
+			{
+				bool value = setting->GetBool();
+				return value ? "true" : "false";
+			}
+			case Setting::Type::kChar:
+			{
+				char value = setting->GetChar();
+				return std::string(1, value);
+			}
+			case Setting::Type::kUChar:
+			{
+				unsigned char value = setting->GetUChar();
+				return std::to_string(value);
+			}
+			case Setting::Type::kInt:
+			{
+				int value = setting->GetInt();
+				return std::to_string(value);
+			}
+			case Setting::Type::kUInt:
+			{
+				unsigned int value = setting->GetUInt();
+				return std::to_string(value);
+			}
+			case Setting::Type::kFloat:
+			{
+				float value = setting->GetFloat();
+				return std::to_string(value);
+			}
+			case Setting::Type::kString:
+			{
+				std::string_view value = setting->GetString();
+				return std::string(value);
+			}
+			case Setting::Type::kRGB:
+			{
+				unsigned int value = setting->GetUInt();
+				char buffer[8];
+				std::snprintf(buffer, sizeof(buffer), "#%06X", value & 0xFFFFFF);
+				return std::string(buffer);
+			}
+			case Setting::Type::kRGBA:
+			{
+				unsigned int value = setting->GetUInt();
+				char buffer[10];
+				std::snprintf(buffer, sizeof(buffer), "#%08X", value);
+				return std::string(buffer);
+			}
+			default:
+				return "";
+			}
 		}
 
 	private:
