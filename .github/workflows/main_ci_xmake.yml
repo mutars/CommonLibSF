@@ -2,31 +2,35 @@ name: Main CI [XMake]
 
 on:
   pull_request:
-    branches: [main, feature/*, fix/*]
+    branches: main
     paths:
-      - "CommonLibSF/**"
+      - "src/**"
+      - "include/**"
+      - ".github/workflows/main_ci_xmake.yml"
       - "xmake.lua"
+      - "xmake-extra.lua"
   workflow_dispatch:
 
 jobs:
-  build:
+  build-xmake:
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        mode: [release]
-
+        toolchain:
+          - msvc
+          - clang-cl
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup XMake
-        uses: xmake-io/github-action-setup-xmake@v1.0.13
+        uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: "2.8.2"
+          xmake-version: "latest"
 
       - name: Configure
-        run: xmake config -y --mode=${{ matrix.mode }} --vs_toolset=14.37
+        run: xmake config -y --mode=releasedbg --toolchain=${{ matrix.toolchain }} --vs_toolset=14
 
       - name: Build
         run: xmake build -y -vD

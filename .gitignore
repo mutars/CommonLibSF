@@ -4,7 +4,7 @@ CMakeFiles
 CMakeCache.txt
 /.vs*
 /.vscode*
-/.idea*
+/.idea
 /.xmake
 conan.lock
 conanbuildinfo.*
@@ -14,7 +14,9 @@ graph_info.json
 /out*
 /CommonLibSF/.vs
 /CommonLibSF/out
-CommonLibSF/.idea*
-CommonLibSF/cmake-build*
 /vsxmake*
+
+.idea
+*ReSharper*
 /cmake-build*
+

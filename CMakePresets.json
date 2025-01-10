@@ -1,88 +1,221 @@
-﻿{
-  "version": 3,
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 30
+  },
   "configurePresets": [
     {
-      "name": "linux-debug",
-      "displayName": "Linux Debug",
-      "description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system.",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
-      "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
-    },
-    {
-      "name": "macos-debug",
-      "displayName": "macOS Debug",
-      "description": "Target a remote macOS system.",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Darwin"
-      },
-      "vendor": { "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": { "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}" } }
-    },
-    {
-      "name": "windows-base",
-      "description": "Target Windows with the Visual Studio development environment.",
+      "name": "packaging-vcpkg",
       "hidden": true,
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "buildtype-debug-msvc",
+      "hidden": true,
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CONFIGURATION_TYPES": "Debug",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md",
+        "VCPKG_HOST_TRIPLET": "x64-windows-static-md"
       }
     },
     {
-      "name": "x64-debug",
-      "displayName": "x64 Debug",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
+      "name": "buildtype-release-msvc",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CONFIGURATION_TYPES": "Release",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md-release",
+        "VCPKG_HOST_TRIPLET": "x64-windows-static-md-release"
+      }
+    },
+    {
+      "name": "buildtype-debug-clang-cl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CONFIGURATION_TYPES": "Debug",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md",
+        "VCPKG_HOST_TRIPLET": "x64-windows-static-md"
+      }
+    },
+    {
+      "name": "buildtype-release-clang-cl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CONFIGURATION_TYPES": "Release",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md-release",
+        "VCPKG_HOST_TRIPLET": "x64-windows-static-md-release"
+      }
+    },
+    {
+      "name": "x64",
+      "hidden": true,
       "architecture": {
         "value": "x64",
         "strategy": "external"
+      }
+    },
+    {
+      "name": "generator-msvc",
+      "inherits": "x64",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022"
+    },
+    {
+      "name": "generator-ninja",
+      "hidden": true,
+      "generator": "Ninja"
+    },
+    {
+      "name": "compiler-msvc",
+      "hidden": true,
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-msvc-x64",
+          "enableMicrosoftCodeAnalysis": true
+        }
+      }
+    },
+    {
+      "name": "compiler-clang-cl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang-cl"
       },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64",
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      }
     },
     {
-      "name": "x64-release",
-      "displayName": "x64 Release",
-      "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x64-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "name": "build-debug-msvc-msvc",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-debug-msvc",
+        "generator-msvc",
+        "compiler-msvc"
+      ],
+      "binaryDir": "${sourceDir}/build/debug-msvc-msvc"
     },
     {
-      "name": "x86-debug",
-      "displayName": "x86 Debug",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (Debug)",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "name": "build-debug-msvc-ninja",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-debug-msvc",
+        "generator-ninja",
+        "compiler-msvc"
+      ],
+      "binaryDir": "${sourceDir}/build/debug-msvc-ninja"
     },
     {
-      "name": "x86-release",
-      "displayName": "x86 Release",
-      "description": "Target Windows (32-bit) with the Visual Studio development environment. (RelWithDebInfo)",
-      "inherits": "x86-debug",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "name": "build-debug-clang-cl-msvc",
+      "toolset": "ClangCL",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-debug-clang-cl",
+        "generator-msvc",
+        "compiler-clang-cl"
+      ],
+      "binaryDir": "${sourceDir}/build/debug-clang-cl-msvc"
+    },
+    {
+      "name": "build-debug-clang-cl-ninja",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-debug-clang-cl",
+        "generator-ninja",
+        "compiler-clang-cl"
+      ],
+      "binaryDir": "${sourceDir}/build/debug-clang-cl-ninja"
+    },
+    {
+      "name": "build-release-msvc-msvc",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-release-msvc",
+        "generator-msvc",
+        "compiler-msvc"
+      ],
+      "binaryDir": "${sourceDir}/build/release-msvc-msvc"
+    },
+    {
+      "name": "build-release-msvc-ninja",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-release-msvc",
+        "generator-ninja",
+        "compiler-msvc"
+      ],
+      "binaryDir": "${sourceDir}/build/release-msvc-ninja"
+    },
+    {
+      "name": "build-release-clang-cl-msvc",
+      "toolset": "ClangCL",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-release-clang-cl",
+        "generator-msvc",
+        "compiler-clang-cl"
+      ],
+      "binaryDir": "${sourceDir}/build/release-clang-cl-msvc"
+    },
+    {
+      "name": "build-release-clang-cl-ninja",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-release-clang-cl",
+        "generator-ninja",
+        "compiler-clang-cl"
+      ],
+      "binaryDir": "${sourceDir}/build/release-clang-cl-ninja"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug-msvc-ninja",
+      "configurePreset": "build-debug-msvc-ninja",
+      "displayName": "1. (Debug) MSVC - Ninja"
+    },
+    {
+      "name": "release-msvc-ninja",
+      "configurePreset": "build-release-msvc-ninja",
+      "displayName": "2. (Release) MSVC - Ninja"
+    },
+    {
+      "name": "debug-msvc-msvc",
+      "configurePreset": "build-debug-msvc-msvc",
+      "displayName": "3. (Debug) MSVC - MSVC"
+    },
+    {
+      "name": "release-msvc-msvc",
+      "configurePreset": "build-release-msvc-msvc",
+      "displayName": "4. (Release) MSVC - MSVC"
+    },
+    {
+      "name": "debug-clang-cl-ninja",
+      "configurePreset": "build-debug-clang-cl-ninja",
+      "displayName": "5. (Debug) Clang - Ninja"
+    },
+    {
+      "name": "release-clang-cl-ninja",
+      "configurePreset": "build-release-clang-cl-ninja",
+      "displayName": "6. (Release) Clang - Ninja"
+    },
+    {
+      "name": "debug-clang-cl-msvc",
+      "configurePreset": "build-debug-clang-cl-msvc",
+      "displayName": "7. (Debug) Clang - MSVC"
+    },
+    {
+      "name": "release-clang-cl-msvc",
+      "configurePreset": "build-release-clang-cl-msvc",
+      "displayName": "8. (Release) Clang - MSVC"
     }
   ]
 }
