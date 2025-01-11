@@ -113,7 +113,7 @@ namespace REL
 			alignas(result_t) std::byte result[sizeof(result_t)]{};
 
 			using func_t = member_function_non_pod_type_t<F>;
-			auto func = std::bit_cast<func_t*>(std::forward<F>(a_func));
+			auto func    = std::bit_cast<func_t*>(std::forward<F>(a_func));
 
 			return func(std::forward<First>(a_first), std::addressof(result), std::forward<Rest>(a_rest)...);
 		}

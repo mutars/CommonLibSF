@@ -9,23 +9,8 @@ namespace RE
 {
 	class NiCollisionObject;
 	class NiNode;
-
-#pragma pack(push, 1)
-    struct NiCloneProcess
-    {
-        uint64_t  unk0{0};
-        uint64_t  unk8{0};
-        uint64_t  unk10{0};
-        uint64_t  unk18{0};
-        uint32_t  dword_7FF744EB3960{1};
-        uint16_t  flag{0x2400};
-        uint8_t   flag26{1};
-        uint8_t  unk27;
-        float     unk_28{1.0f};
-        float     unk_2C{1.0f};
-        float    unk_30{1.0f};
-    };
-#pragma pack(pop)
+	class NiCamera;
+	class NiUpdateData;
 
     template <class T>
     struct BSArray
@@ -54,92 +39,11 @@ namespace RE
         const char* parent;
     };
 
-    struct NiUpdateData
-    {
-        float     delta = 0;
-        float     unk04 = 0;
-        NiCamera* camera = nullptr;
-        NiPoint4* unk10 = nullptr;
-        NiPoint4* unk18 = nullptr;
-        uint64_t  unk20 = 0; // memset 0,36 here looks like allockation for 36 bytes
-        uint64_t  unk28 = 0;
-        uint64_t  unk30 = 0; // unk34 float possible deltaY/X rotation
-        uint32_t  flags = 0x10;
-        uint32_t  flags2 = 1;
-        uint32_t  flags3 = 1;
-        uint32_t  frameCounter = 0; // timer or counter or frame counter get's from offset 0x59AE8A0
-        float     unk48 = 0; // possible delta X/Y rotation
-        uint32_t  unk4C = 0;
-        float     unk50 = 0; // unk50 is rotation matrix
-        float     unk54 = 0;
-        float     unk58 = 0;
-        uint32_t  unk5C = 0;
-    };
-
-    class NiObject: public NiRefObject
-    {
-    public:
-        virtual ~NiObject() = default;
-        virtual NiRTTI*     GetRTTI();
-        virtual NiNode*     GetAsNiNode();
-        virtual NiNode*     GetAsNiSwitchNode();
-        virtual void*       Unk5() { return nullptr; }
-        virtual void*       Unk6() { return nullptr; }
-        virtual void*       Unk7() { return nullptr; }
-        virtual void*       Unk8() { return nullptr; }
-        virtual NiAVObject* GetAsBSGeometry() { return nullptr; }
-        virtual void*       Unk10() { return nullptr; }
-        virtual void*       Unk11() { return nullptr; }
-        virtual void*       Unk12() { return nullptr; }
-        virtual void*       Unk13() { return nullptr; }
-        virtual void*       Unk14() { return nullptr; }
-        virtual void*       Unk15() { return nullptr; }
-        virtual void*       Unk16() { return nullptr; }
-        virtual void*       Unk17() { return nullptr; }
-        virtual void*       Unk18() { return nullptr; }
-        virtual void*       Unk19() { return nullptr; }
-        virtual void*       Unk20() { return nullptr; }
-        virtual void*       Unk21() { return nullptr; }
-        virtual void*       Unk22() { return nullptr; }
-        virtual void*       Unk23() { return nullptr; }
-        virtual void*       Unk24() { return nullptr; }
-        virtual void*       Unk25() { return nullptr; }
-        virtual void*       Unk26() { return nullptr; }
-        virtual void*       Unk27() { return nullptr; }
-        virtual void*       Unk28() { return nullptr; }
-        virtual void*       Unk29() { return nullptr; }
-        virtual void*       Unk30() { return nullptr; }
-        virtual BSLight*    GetAsBSLight() { return nullptr; }
-        virtual void*       Unk32() { return nullptr; }
-        virtual void*       Unk33() { return nullptr; }
-        virtual void*       Unk34() { return nullptr; }
-        virtual void*       Unk35() { return nullptr; }
-        virtual void*       Unk36() { return nullptr; }
-        virtual void*       Unk37() { return nullptr; }
-        virtual void*       Unk38() { return nullptr; }
-        virtual void*       Unk39() { return nullptr; }
-        virtual void*       Unk40() { return nullptr; } // all castings end here
-        virtual void*       createClone(NiCloneProcess* cloningProcess);
-        virtual void*       streaming1(); // some sort of streaming 2
-        virtual void*       Unk43();
-        virtual void*       Unk44();
-        virtual void*       streaming2();  // some sort of streaming
-        virtual bool        equals(NiObject* second);
-        virtual void*       Unk47();
-        virtual void*       Unk48();
-        virtual void*       Unk49();
-        virtual void*       getRTTIDelegate();  // calls GetRTTI internally
-        virtual void*       Unk51();
-        virtual void*       Unk52();
-        virtual void*       Unk53();
-        virtual void*       Unk54();
-    };
-
-	{
+	class NiAVObject: public NiObjectNET {
 	public:
-		SF_RTTI_VTABLE(NiAVObject);
+		//SF_RTTI_VTABLE(NiAVObject);
 
-		virtual ~NiAVObject() = default;
+		virtual ~NiAVObject() = 0;
 
 		// add
         virtual void*   Update4(NiUpdateData* data); // calls update3 or 2 function (they are all point to same address)
@@ -172,18 +76,12 @@ namespace RE
         virtual void*   Unk82();
         virtual void*   Unk83();
 
-		// members
-        BSFixedString   name;        // 10
-        void*           controller;  // 18
-        void*           unk28;       // 20
-        void*           unk30;       // 28
-        void*           unk38;       // 30 BSArray<NiExtraData*>*
         NiNode*                      parent;           // 038
 		NiTransform                  local;            // 040
 		NiTransform                  world;            // 080
 		NiTransform                  previousWorld;    // 0C0
 		NiBound                      worldBound;       // 100
-		NiPointer<NiCollisionObject> collisionObject;  // 110
+		NiCollisionObject*           collisionObject;  // 110
 		std::uint64_t                flags;            // 118
 		void*                        unk120;           // 120
         uint32_t             lastUpdatedFrame;  // 128

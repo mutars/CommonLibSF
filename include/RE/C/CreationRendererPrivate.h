@@ -4,7 +4,6 @@
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/C/CreationRendererContext.h"
-#include "RE/utils.h"
 
 struct D3D12_CPU_DESCRIPTOR_HANDLE;
 struct ID3D12Resource;

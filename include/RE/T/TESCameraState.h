@@ -2,7 +2,7 @@
 #include "RE/B/BSInputEventUser.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
 #include "RE/P/PlayerCamera.h"
-#include "RE/N/NiPoint3.h"
+#include "RE/N/NiPoint.h"
 
 namespace RE
 {

@@ -2,7 +2,7 @@
   "version": 6,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 30
+    "minor": 28
   },
   "configurePresets": [
     {
@@ -18,6 +18,13 @@
         "CMAKE_CONFIGURATION_TYPES": "Debug",
         "VCPKG_TARGET_TRIPLET": "x64-windows-static-md",
         "VCPKG_HOST_TRIPLET": "x64-windows-static-md"
+      }
+    },
+    {
+      "name": "include-tests-debug-msvc",
+      "hidden": true,
+      "cacheVariables": {
+        "SFSE_BUILD_TESTS": "true"
       }
     },
     {
@@ -100,6 +107,17 @@
         "buildtype-debug-msvc",
         "generator-msvc",
         "compiler-msvc"
+      ],
+      "binaryDir": "${sourceDir}/build/debug-msvc-msvc"
+    },
+    {
+      "name": "build-debug-msvc-msvc-test",
+      "inherits": [
+        "packaging-vcpkg",
+        "buildtype-debug-msvc",
+        "generator-msvc",
+        "compiler-msvc",
+        "include-tests-debug-msvc"
       ],
       "binaryDir": "${sourceDir}/build/debug-msvc-msvc"
     },
@@ -191,6 +209,11 @@
       "name": "debug-msvc-msvc",
       "configurePreset": "build-debug-msvc-msvc",
       "displayName": "3. (Debug) MSVC - MSVC"
+    },
+    {
+      "name": "debug-msvc-msvc-test",
+      "configurePreset": "build-debug-msvc-msvc-test",
+      "displayName": "3. (DebugTest) MSVC - MSVC"
     },
     {
       "name": "release-msvc-msvc",

@@ -5,8 +5,7 @@
 #include <RE/B/BSTSingleton.h>
 #include <RE/B/BSTEvent.h>
 #include <RE/I/IMovementInterface.h>
-#include <RE/M/MenuOpenCloseEvent.h>
-#include "RE/utils.h"
+
 namespace RE
 { 
 	struct PositionPlayerEvent;
@@ -15,7 +14,7 @@ namespace RE
 	struct TESFurnitureEvent;
 	class UserEventEnabledEvent;
 
-	namespace PlayerControls
+	namespace PlayerControls1
 	{
 		class PlayerInputHandler : public BSInputEventUser
 		{
@@ -118,7 +117,7 @@ namespace RE
 
 		class Manager :
 			public BSInputEventReceiver,
-			public BSTSingletonSDM<PlayerControls::Manager, BSTSingletonSDMOpStaticBuffer>,
+			public BSTSingletonSDM<PlayerControls1::Manager, BSTSingletonSDMOpStaticBuffer>,
 			public IMovementPlayerControls,
 			public BSTEventSink<MenuModeChangeEvent>,
 			public BSTEventSink<MenuOpenCloseEvent>,

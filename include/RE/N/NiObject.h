@@ -9,8 +9,24 @@ namespace RE
 	class NiRTTI;
 	class NiNode;
 
-	class __declspec(novtable) NiObject :
-		public NiRefObject
+#pragma pack(push, 1)
+	struct NiCloneProcess
+	{
+		uint64_t  unk0{0};
+		uint64_t  unk8{0};
+		uint64_t  unk10{0};
+		uint64_t  unk18{0};
+		uint32_t  dword_7FF744EB3960{1};
+		uint16_t  flag{0x2400};
+		uint8_t   flag26{1};
+		uint8_t  unk27;
+		float     unk_28{1.0f};
+		float     unk_2C{1.0f};
+		float    unk_30{1.0f};
+	};
+#pragma pack(pop)
+
+	class __declspec(novtable) NiObject : public NiRefObject
 	{
 	public:
 		SF_RTTI(NiObject);
@@ -55,17 +71,17 @@ namespace RE
 		virtual void*       Unk37() { return nullptr; }
 		virtual void*       Unk38() { return nullptr; }
 		virtual void*       Unk39() { return nullptr; }
-		virtual void*       Unk40() { return nullptr; }
-		virtual void*       Unk41();
-		virtual void*       Unk42();
+        virtual void*       Unk40() { return nullptr; } // all castings end here
+        virtual void*       createClone(NiCloneProcess* cloningProcess);
+        virtual void*       streaming1(); // some sort of streaming 2
 		virtual void*       Unk43();
 		virtual void*       Unk44();
-		virtual void*       Unk45();
-		virtual void*       Unk46();
+        virtual void*       streaming2();  // some sort of streaming
+        virtual bool        equals(NiObject* second);
 		virtual void*       Unk47();
 		virtual void*       Unk48();
 		virtual void*       Unk49();
-		virtual void*       Unk50();
+        virtual void*       getRTTIDelegate();  // calls GetRTTI internally
 		virtual void*       Unk51();
 		virtual void*       Unk52();
 		virtual void*       Unk53();

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "RE/utils.h"
-
 namespace RE {
     namespace StorageTable {
 

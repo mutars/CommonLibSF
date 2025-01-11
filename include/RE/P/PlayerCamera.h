@@ -5,7 +5,6 @@
 #include "RE/T/TESCamera.h"
 #include "RE/T/TESCameraState.h"
 #include "RE/F/FirstPersonState.h"
-#include "re/utils.h"
 
 namespace RE
 {

@@ -1,41 +1,18 @@
 #pragma once
 
+#include "RE/N/NiAVObject.h"
 #include "RE/N/NiFrustum.h"
 #include "RE/N/NiPoint.h"
 #include "RE/N/NiRect.h"
 
 namespace RE
 {
-
-	class NiFrustum
-	{
-	public:
-		float left;    // 00
-		float right;   // 04
-		float top;     // 08
-		float bottom;  // 0C
-		float _near;   // 10
-		float _far;    // 14
-	};
-	static_assert(sizeof(NiFrustum) == 0x18);
-
-    class __declspec(novtable) NiCamera :
-            public NiAVObject
+	class __declspec(novtable) NiCamera : public NiAVObject
     {
 	public:
 		SF_RTTI_VTABLE(NiCamera);
 
 		virtual ~NiCamera() = default;
-
-		virtual void* createClone(NiCloneProcess* cloningProcess) override;
-
-
-        NiPoint2 WorldToScreenInternal(const NiPoint4* worldPt, NiPoint3* leftBoundary, NiPoint3* rightBoundary)
-        {
-            using func_t = decltype(&NiCamera::WorldToScreenInternal);
-            REL::Relocation<func_t> func{ REL::ID(210415) };
-            return func(this, worldPt, leftBoundary, rightBoundary);
-        }
 
         void SetNiFrustumInternal(NiFrustum* frustum)
         {
@@ -165,10 +142,10 @@ namespace RE
 			return result;
 		}
 
-		virtual void* UpdateWorldData(NiUpdateData* data) override;
-		virtual void* UpdateTransformAndBounds(NiUpdateData* data) override;  // calls UpdateWorldData if flags & 4 == 0 also calls unk78 with 0 also flips flags if they are in specific state
-		virtual void* UpdateTransforms(NiUpdateData* data) override;          // calls UpdateWorldData if flags & 4 != 0
-		virtual void* updateWorldBoundFromWorldTranslate();
+//		virtual void* UpdateWorldData(NiUpdateData* data) override;
+//		virtual void* UpdateTransformAndBounds(NiUpdateData* data) override;  // calls UpdateWorldData if flags & 4 == 0 also calls unk78 with 0 also flips flags if they are in specific state
+//		virtual void* UpdateTransforms(NiUpdateData* data) override;          // calls UpdateWorldData if flags & 4 != 0
+//		virtual void* updateWorldBoundFromWorldTranslate();
 
 		uint32_t      cameraHandleID{ 0xFFFFFF };  //130
 		uint8_t       pad_0133[12];                //134

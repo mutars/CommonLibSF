@@ -8,8 +8,7 @@ namespace RE
 {
 	class NiTimeController;
 
-	class __declspec(novtable) NiObjectNET :
-		public NiObject
+	class __declspec(novtable) NiObjectNET: public NiObject
 	{
 	public:
 		SF_RTTI_VTABLE(NiObjectNET);
@@ -18,10 +17,10 @@ namespace RE
 
 		// members
 		BSFixedString               name;        // 010
-		NiPointer<NiTimeController> controller;  // 018
+		NiTimeController*       controller;  // 018
 		void*                       unk020;      // 020 - NiExtraDataContainer*
 		void*                       unk028;      // 028
-		void*                       unk030;      // 030
+		void*                       unk030;      // 30 BSArray<NiExtraData*>*
 	};
 	static_assert(sizeof(NiObjectNET) == 0x38);
 	static_assert(offsetof(NiObjectNET, name) == 0x10);

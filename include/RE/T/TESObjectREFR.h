@@ -407,4 +407,5 @@ namespace RE
 		void AddLockChange();
 	};
 	static_assert(sizeof(TESObjectREFR) == 0xD8);
+	static_assert(offsetof(TESObjectREFR, data) == 0x80);
 }

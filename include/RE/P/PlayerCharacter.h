@@ -343,7 +343,7 @@ namespace RE
 		std::uint64_t  unk0E80;          // 0E80
 		std::uint64_t  unk0E88;          // 0E88
 		std::uint64_t  unk0E90;          // 0E90
-		std::uint64_t  unk0E98;          // 0E98
+		NiNode*  activeCrossHairTarget;          // 0EE0
 		std::uint64_t  unk0EA0;          // 0EA0
 		std::uint64_t  unk0EA8;          // 0EA8
 		std::uint64_t  unk0EB0;          // 0EB0
@@ -352,7 +352,7 @@ namespace RE
 		std::uint64_t  unk0EC8;          // 0EC8
 		std::uint64_t  unk0ED0;          // 0ED0
 		BGSLocation*   currentLocation;  // 0ED8
-		NiNode*  activeCrossHairTarget;          // 0EE0
+		std::uint64_t  unk0EE0;          // 0EE0
 		std::uint64_t  unk0EE8;          // 0EE8
 		std::uint64_t  unk0EF0;          // 0EF0
 		std::uint64_t  unk0EF8;          // 0EF8
@@ -419,5 +419,6 @@ namespace RE
 		std::uint64_t  unk10D8;          // 10D8
 	};
 	static_assert(sizeof(PlayerCharacter) == 0x1128);
-	static_assert(offsetof(PlayerCharacter, data) == 0x78);
+	static_assert(offsetof(PlayerCharacter, data) == 0x80);
+	static_assert(offsetof(PlayerCharacter, activeCrossHairTarget) == 0xEE0);
 }

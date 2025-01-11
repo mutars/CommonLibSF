@@ -2,7 +2,7 @@
 
 #include <RE/B/BSTSingleton.h>
 #include <RE/B/BSTEvent.h>
-#include <RE/N/NiPoint3.h>
+#include <RE/N/NiPoint.h>
 #include <RE/N/NiMatrix3.h>
 #include <RE/N/NiCamera.h>
 #include <RE/T/TESObjectCELL.h>

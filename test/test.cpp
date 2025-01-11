@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	RE::NiPoint2* np2 = nullptr;
 	(void)np2;
 	(void)fps;
-	RE::PlayerControls::Manager* pcm = nullptr;
+	RE::PlayerControls1::Manager* pcm = nullptr;
 	(void)pcm;
 	RE::Camera::Manager* cm = nullptr;
 	(void)cm;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	(void)bsfs;
 	RE::StorageTable::MultiViewAllocator* mva = nullptr;
 	(void)mva;
-	RE::CreationRendererPrivate::RenderGraphBSTAllocator rgba;
+	RE::CreationRendererPrivate::RenderGraphBSTAllocator* rgba;
 	(void)rgba;
     RE::StorageTable::CameraViewHandle* cvsd = nullptr;
     (void)cvsd;
